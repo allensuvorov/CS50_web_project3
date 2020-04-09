@@ -8,4 +8,4 @@ def index(request):
     context = {
         "pizzas": Pizza.objects.all()
     }
-    return render(request, "menu/index.html", context)
+    return render(request, "orders/index.html", context)
