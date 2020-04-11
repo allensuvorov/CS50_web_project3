@@ -70,3 +70,40 @@ class Sub(models.Model):
         return f"{self.name} {self.size} - {self.price} dollars"
 
 # endregion Sub models
+
+# region Pasta, Salad, Dinner Platter
+class Pasta(models.Model):
+    name = models.CharField(max_length=64)
+    price = models.DecimalField(max_digits=5,decimal_places=2)
+
+    def __str__(self):
+        return f"{self.name} {self.price}"
+
+class Salad(models.Model):
+    name = models.CharField(max_length=64)
+    price = models.DecimalField(max_digits=5,decimal_places=2)
+
+    def __str__(self):
+        return f"{self.name} {self.price}"
+
+class Dinner_platter(models.Model):
+
+    name = models.CharField(max_length=64)
+    price = models.DecimalField(max_digits=5,decimal_places=2)
+
+    def __str__(self):
+        return f"{self.name} {self.price}"
+# endregion Pasta, Salad, Dinner Platter
+
+# region Order
+
+class Order(models.Model):
+    address = models.CharField(max_length=64)
+    date = models.DateField(auto_now=True)
+    pizzas = models.ManyToManyField(Pizza, blank=True)
+    subs = models.ManyToManyField(Sub, blank=True)
+    pastas = models.ManyToManyField(Pasta, blank=True)
+    dinner_platters = models.ManyToManyField(Dinner_platter, blank=True)
+
+
+# endregion Order
