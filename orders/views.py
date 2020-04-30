@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from orders.forms import RegistrationForm
 from django.urls import reverse
 
 from .models import Pizza
@@ -14,7 +14,7 @@ def index(request):
 
 def register_view(request):
     if request.method =='POST':
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
         print (form.errors)
         if form.is_valid():
             form.save()
@@ -25,7 +25,7 @@ def register_view(request):
         else:
             return render(request, "orders/register.html")
     else:
-        form = UserCreationForm()
+        form = RegistrationForm()
         context = {
             "form": form
         }
