@@ -20,8 +20,7 @@ def register_view(request):
             form.save()
 
             return HttpResponseRedirect(reverse("index"))
-            # return redirect("index")
-            # TestMe1000me
+
         else:
             return render(request, "orders/register.html")
     else:
