@@ -1,0 +1,21 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+    Menu
+{% endblock %}
+
+{% block body %}
+    <h1>Hello, {{ user.first_name }}</h1>
+    <ul>
+        <li>Currently logged in as: {{ user.username }}</li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+    <h1>Menu</h1>
+    <ul>
+        {% for pizza in pizzas %}
+        <li>
+            {{ pizza }}
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

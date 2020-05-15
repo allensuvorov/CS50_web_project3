@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
@@ -7,12 +8,19 @@ from .models import Pizza
 
 # Create your views here.
 def index(request):
+    # if user is not authenticated than show index page with login and register links
+    if not request.user.is_authenticated:
+        return render(request, "orders/index.html", {"message": None})
+    
+    # else show user page
     context = {
-        "pizzas": Pizza.objects.all()
+        "pizzas": Pizza.objects.all(),
+        "user": request.user
     }
-    return render(request, "orders/index.html", context)
+    return render(request, "orders/user.html", context)
 
 def register_view(request):
+    
     if request.method =='POST':
         form = RegistrationForm(request.POST)
         print (form.errors)
@@ -29,3 +37,21 @@ def register_view(request):
             "form": form
         }
         return render(request, "orders/register.html", context)
+
+def login_view(request):
+    if request.method =='POST':
+
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "orders/login.html", {"message": "Invalid credentials."})
+    else:
+        return render(request, "orders/login.html", {"message": "Enter credentials."})
+
+def logout_view(request):
+    logout(request)
+    return render(request, "orders/index.html", {"message": "Logged out."})

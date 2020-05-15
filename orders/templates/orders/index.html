@@ -10,25 +10,12 @@
     <hr>
 
     <a href="{% url 'register' %}">Register</a>
+    <br>
     <a href="{% url 'login' %}">Login</a>
-
+    
+    {% if message %}
+        <div>
+            {{ message }}
+        </div>
+    {% endif %}
 {% endblock %}
-
-
-<!-- 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Menu</title>
-    </head>
-    <body>
-        <h1>Menu</h1>
-        <ul>
-            {% for pizza in pizzas %}
-            <li>
-                {{ pizza }}
-            </li>
-            {% endfor %}
-        </ul>
-    </body>
-</html> -->
