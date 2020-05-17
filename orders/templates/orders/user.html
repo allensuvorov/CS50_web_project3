@@ -10,7 +10,7 @@
         <li>Currently logged in as: {{ user.username }}</li>
         <li><a href="{% url 'logout' %}">Logout</a></li>
     </ul>
-    <h1>Menu</h1>
+    <h2>Menu</h2>
     <ul>
         {% for pizza in pizzas %}
         <li>
@@ -18,4 +18,39 @@
         </li>
         {% endfor %}
     </ul>
+    
+    <h2>Add Item to Shopping Cart</h2>
+    {% if pizzas %}
+        <h3>Pick a Pizza</h3>
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- <select name="pizza">
+                {% for pizza in pizzas %}
+                <option value ="{{ pizza.id }}">{{ pizza }}</option>
+                {% endfor %}
+            </select> -->
+
+            <select name="pizza_name">
+                {% for pizza_name in pizza_names %}
+                <option>{{ pizza_name }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="pizza_size">
+                {% for pizza_size in pizza_sizes %}
+                <option>{{ pizza_size }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="pizza_topping" multiple>
+                {% for pizza_topping in pizza_toppings %}
+                <option>{{ pizza_topping }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" value="Add to cart"/>
+        </form>
+    {% endif %}
+
 {% endblock %}

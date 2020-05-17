@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
 
-from .models import Pizza
+from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping
 
 # Create your views here.
 def index(request):
@@ -13,8 +13,13 @@ def index(request):
         return render(request, "orders/index.html", {"message": None})
     
     # else show user page
+    
     context = {
         "pizzas": Pizza.objects.all(),
+        "pizza_names": Pizza_name.objects.all(),
+        "pizza_sizes": Pizza_size.objects.all(),
+        "pizza_toppings": Pizza_topping.objects.all(),
+        
         "user": request.user
     }
     return render(request, "orders/user.html", context)
@@ -55,3 +60,6 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return render(request, "orders/index.html", {"message": "Logged out."})
+
+# def add_view(request):
+#     try:

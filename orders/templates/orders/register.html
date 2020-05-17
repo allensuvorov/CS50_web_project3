@@ -6,7 +6,7 @@
 
 {% block body %}
     <h1>Register</h1>
-    <form method="POST">
+    <form method="POST"> <!-- why function register is not specified here? -->
         {% csrf_token %}
         {{ form.as_p }} <!--  form as paragraph -->
         <button type="submit">Register</button>
