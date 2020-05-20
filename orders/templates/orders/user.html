@@ -7,7 +7,7 @@
 {% block body %}
     <h1>Hello, {{ user.first_name }}</h1>
     <ul>
-        <li>Currently logged in as: {{ user.username }}</li>
+        <li>Currently logged in as: {{ user.username}}, {{ user.id }}</li>
         <li><a href="{% url 'logout' %}">Logout</a></li>
     </ul>
     <h2>Menu</h2>
@@ -20,6 +20,7 @@
     </ul>
     
     <h2>Add Item to Shopping Cart</h2>
+    
     {% if pizzas %}
         <h3>Pick a Pizza</h3>
         <form method="post">

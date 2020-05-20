@@ -104,6 +104,12 @@ class Order(models.Model):
     subs = models.ManyToManyField(Sub, blank=True)
     pastas = models.ManyToManyField(Pasta, blank=True)
     dinner_platters = models.ManyToManyField(Dinner_platter, blank=True)
+    
+    cart = models.BooleanField()    
+    user = models.ForeignKey(user, on_delete=models.CASCADE)
+    status = models.ForeignKey(Order_status, on_delete=models.CASCADE)
 
+class Order_status(models.Model):
+    name = models.CharField(max_lenghth=64)
 
 # endregion Order
