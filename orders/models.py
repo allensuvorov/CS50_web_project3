@@ -1,4 +1,7 @@
 from django.db import models
+from django.conf import settings
+from django.contrib.auth import get_user_model
+
 
 # Create your models here.
 
@@ -97,6 +100,9 @@ class Dinner_platter(models.Model):
 
 # region Order
 
+class Order_status(models.Model):
+    name = models.CharField(max_length=64)
+
 class Order(models.Model):
     address = models.CharField(max_length=64)
     date = models.DateField(auto_now=True)
@@ -105,11 +111,12 @@ class Order(models.Model):
     pastas = models.ManyToManyField(Pasta, blank=True)
     dinner_platters = models.ManyToManyField(Dinner_platter, blank=True)
     
-    cart = models.BooleanField()    
-    user = models.ForeignKey(user, on_delete=models.CASCADE)
+    cart = models.BooleanField(default=True)    
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE
+        )
     status = models.ForeignKey(Order_status, on_delete=models.CASCADE)
 
-class Order_status(models.Model):
-    name = models.CharField(max_lenghth=64)
 
 # endregion Order
