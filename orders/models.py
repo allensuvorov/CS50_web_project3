@@ -101,7 +101,7 @@ class Dinner_platter(models.Model):
 # region Order
 
 class Order_status(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, blank=True)
 
 class Order(models.Model):
     address = models.CharField(max_length=64)
@@ -111,12 +111,13 @@ class Order(models.Model):
     pastas = models.ManyToManyField(Pasta, blank=True)
     dinner_platters = models.ManyToManyField(Dinner_platter, blank=True)
     
-    cart = models.BooleanField(default=True)    
+    # cart = models.BooleanField(default=True, blank=True)    
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        blank=True
         )
-    status = models.ForeignKey(Order_status, on_delete=models.CASCADE)
+    status = models.ForeignKey(Order_status, on_delete=models.CASCADE, blank=True)
 
 
 # endregion Order
