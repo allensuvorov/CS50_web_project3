@@ -103,7 +103,17 @@ class Dinner_platter(models.Model):
 class Order_status(models.Model):
     name = models.CharField(max_length=64, blank=True)
 
+    def __str__(self):
+        return f"{self.name}"
+
 class Order(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE,
+        blank=True
+        )
+    status = models.ForeignKey(Order_status, on_delete=models.CASCADE, blank=True)
+
     address = models.CharField(max_length=64)
     date = models.DateField(auto_now=True)
     pizzas = models.ManyToManyField(Pizza, blank=True)
@@ -112,12 +122,8 @@ class Order(models.Model):
     dinner_platters = models.ManyToManyField(Dinner_platter, blank=True)
     
     # cart = models.BooleanField(default=True, blank=True)    
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, 
-        on_delete=models.CASCADE,
-        blank=True
-        )
-    status = models.ForeignKey(Order_status, on_delete=models.CASCADE, blank=True)
+    def __str__(self):
+        return f"#{self.id}, NAME: {self.user}, STATUS: {self.status}, ADDRESS: {self.address}, {self.pizzas.all()}, {self.subs.all()}"
 
 
 # endregion Order
