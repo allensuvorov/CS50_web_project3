@@ -55,7 +55,21 @@
     {% endif %}
     {% if cart %}
         <h3>Shopping Cart</h3>
-        <p>{{ cart }}</p>
+        
+        <!-- <p> {{ cart }} </p> -->
+        
+        <ul>
+            {% for unit in cart %}
 
+                <!-- <p>{{ unit.date }} {{ unit.user }} </p> -->
+                <!-- <p>{{ unit.pizzas.all }}</p> -->
+
+                {% for pizza in unit.pizzas.all %}
+                    <li>{{ pizza }}</li>            
+                {% endfor %}
+                
+            {% endfor %}
+        </ul>    
+            
     {% endif %}
 {% endblock %}
