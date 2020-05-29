@@ -39,7 +39,7 @@ class Pizza(models.Model):
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
-        return f"{self.id} - pizza {self.name} size {self.size} with {self.combo} - {self.price} dollars" 
+        return f"pizza {self.name} size {self.size} with {self.combo} - {self.price} dollars" 
 
 # endregion Pizza models
 
@@ -114,7 +114,7 @@ class Order(models.Model):
         )
     status = models.ForeignKey(Order_status, on_delete=models.CASCADE, blank=True)
 
-    address = models.CharField(max_length=64)
+    address = models.CharField(max_length=64, blank=True)
     date = models.DateField(auto_now=True)
     pizzas = models.ManyToManyField(Pizza, blank=True)
     subs = models.ManyToManyField(Sub, blank=True)

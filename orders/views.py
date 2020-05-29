@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Order
+from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order
 
 # Create your views here.
 def index(request):
@@ -18,6 +18,7 @@ def index(request):
         "pizzas": Pizza.objects.all(),
         "pizza_names": Pizza_name.objects.all(),
         "pizza_sizes": Pizza_size.objects.all(),
+        "pizza_topping_combos": Pizza_topping_combo.objects.all(),
         "pizza_toppings": Pizza_topping.objects.all(),
         "cart": Order.objects.filter(user=request.user, status=1),
         "user": request.user
@@ -61,5 +62,19 @@ def logout_view(request):
     logout(request)
     return render(request, "orders/index.html", {"message": "Logged out."})
 
-# def add_view(request):
-#     try:
+def add_view(request):
+    try:
+        pizza_name_id = int(request.POST["pizza_name"])
+        pizza_size_id = int(request.POST["pizza_size"])
+        pizza_topping_combo_id = int(request.POST["pizza_topping_combo"])
+
+    # find pizza in BD
+        pizza = Pizza.objects.get(name=pizza_name_id, size=pizza_size_id, combo=pizza_topping_combo_id)
+    # find order
+        cart = Order.objects.get(user=request.user, status=1)
+        print (cart)
+    # check if cart is already in created, then use it or create a it
+    except Order.DoesNotExist:
+        return render(request, "orders/error.html", {"message": "No order."})
+    cart.pizzas.add(pizza)
+    return HttpResponseRedirect(reverse("index"))
