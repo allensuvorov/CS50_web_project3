@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order
+from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status
 
 # Create your views here.
 def index(request):
@@ -62,7 +62,15 @@ def logout_view(request):
     logout(request)
     return render(request, "orders/index.html", {"message": "Logged out."})
 
-def add_view(request):
+def cart_view(request):
+    
+    # add check if cart is already in created, then use it or create a it
+    obj, created = Order.objects.get_or_create(
+        user=request.user,
+        status=Order_status.objects.get(pk=1)
+        )
+    print ("\n", obj, "\n")
+
     try:
         pizza_name_id = int(request.POST["pizza_name"])
         pizza_size_id = int(request.POST["pizza_size"])
@@ -70,11 +78,12 @@ def add_view(request):
 
     # find pizza in BD
         pizza = Pizza.objects.get(name=pizza_name_id, size=pizza_size_id, combo=pizza_topping_combo_id)
-    # find order
-        cart = Order.objects.get(user=request.user, status=1)
-        print (cart)
-    # check if cart is already in created, then use it or create a it
-    except Order.DoesNotExist:
-        return render(request, "orders/error.html", {"message": "No order."})
-    cart.pizzas.add(pizza)
+    
+    # find cart in order table
+        # cart = Order.objects.get(user=request.user, status=1)
+    # todo: this exception needs tuning 
+    except Pizza.DoesNotExist:
+        return render(request, "orders/error.html", {"message": "That Pizza Does not Exist."})
+    
+    obj.pizzas.add(pizza)
     return HttpResponseRedirect(reverse("index"))

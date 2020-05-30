@@ -23,7 +23,7 @@
     
     {% if pizzas %}
         <h3>Pick a Pizza</h3>
-        <form action="{% url 'add' %}" method="post">
+        <form action="{% url 'cart' %}" method="post">
             {% csrf_token %}
             
 

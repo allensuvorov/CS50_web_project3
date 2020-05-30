@@ -106,6 +106,12 @@ class Order_status(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+# Delete later
+# class Pizza_order(models.Model):
+#     pizza = models.ForeignKey(Pizza, blank=True)
+#     count = models.IntegerField()
+#     order = models.ForeignKey(Order)
+
 class Order(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
