@@ -106,15 +106,6 @@ class Order_status(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-class Pizza_order_item(models.Model):
-    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, blank=True, )
-    toppings = models.ManyToManyField(Pizza_topping, blank=True)
-    count = models.IntegerField()
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="pizzas")
-
-    def __str__(self):
-        return f"{self.pizza} - {self.count}"
-
 class Order(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
@@ -136,5 +127,13 @@ class Order(models.Model):
         return f"#{self.id}, NAME: {self.user}, STATUS: {self.status}, ADDRESS: {self.address}"
         # , {self.pizzas.all()}, {self.subs.all()}"
 
+class Pizza_order_item(models.Model):
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, blank=True, )
+    toppings = models.ManyToManyField(Pizza_topping, blank=True)
+    count = models.IntegerField()
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="pizzas")
+
+    def __str__(self):
+        return f"{self.pizza} - {self.count}"
 
 # endregion Order
