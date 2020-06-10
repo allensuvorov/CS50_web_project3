@@ -35,7 +35,7 @@ class Pizza(models.Model):
     name = models.ForeignKey(Pizza_name, on_delete=models.CASCADE)
     size = models.ForeignKey(Pizza_size, on_delete=models.CASCADE)
     combo = models.ForeignKey(Pizza_topping_combo, on_delete=models.CASCADE)
-    toppings = models.ManyToManyField(Pizza_topping, blank=True)
+    # toppings = models.ManyToManyField(Pizza_topping, blank=True)
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
@@ -106,10 +106,14 @@ class Order_status(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-# class Pizza_order_item(models.Model):
-#     pizza = models.ForeignKey(Pizza, blank=True)
-#     count = models.IntegerField()
-#     order = models.ForeignKey(Order)
+class Pizza_order_item(models.Model):
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, blank=True, )
+    toppings = models.ManyToManyField(Pizza_topping, blank=True)
+    count = models.IntegerField()
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="pizzas")
+
+    def __str__(self):
+        return f"{self.pizza} - {self.count}"
 
 class Order(models.Model):
     user = models.ForeignKey(
@@ -121,14 +125,16 @@ class Order(models.Model):
 
     address = models.CharField(max_length=64, blank=True)
     date = models.DateField(auto_now=True)
-    pizzas = models.ManyToManyField(Pizza, blank=True)
-    subs = models.ManyToManyField(Sub, blank=True)
-    pastas = models.ManyToManyField(Pasta, blank=True)
-    dinner_platters = models.ManyToManyField(Dinner_platter, blank=True)
+    # pizzas = models.ManyToManyField(Pizza, blank=True)
+    # subs = models.ManyToManyField(Sub, blank=True)
+    # pastas = models.ManyToManyField(Pasta, blank=True)
+    # dinner_platters = models.ManyToManyField(Dinner_platter, blank=True)
     
-    # cart = models.BooleanField(default=True, blank=True)    
+    # cart = models.BooleanField(default=True, blank=True)
+      
     def __str__(self):
-        return f"#{self.id}, NAME: {self.user}, STATUS: {self.status}, ADDRESS: {self.address}, {self.pizzas.all()}, {self.subs.all()}"
+        return f"#{self.id}, NAME: {self.user}, STATUS: {self.status}, ADDRESS: {self.address}"
+        # , {self.pizzas.all()}, {self.subs.all()}"
 
 
 # endregion Order
