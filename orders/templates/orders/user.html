@@ -62,8 +62,8 @@
         <ul>
             {% for unit in cart %}
 
-                <!-- <p>{{ unit.date }} {{ unit.user }} </p> -->
-                <!-- <p>{{ unit.pizzas.all }}</p> -->
+                <!-- <p>{{ unit }} </p>
+                <p>{{ unit.pizzas.all }}</p> -->
 
                 {% for pizza in unit.pizzas.all %}
                     <li>{{ pizza }}</li>            

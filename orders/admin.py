@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Sub, Sub_name, Sub_size, Sub_add_on, Pasta, Salad, Dinner_platter, Order, Order_status
+from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Sub, Sub_name, Sub_size, Sub_add_on, Pasta, Salad, Dinner_platter, Order, Order_status, Pizza_order_item
 
 
 # Register your models here.
@@ -18,3 +18,4 @@ admin.site.register(Salad)
 admin.site.register(Dinner_platter)
 admin.site.register(Order)
 admin.site.register(Order_status)
+admin.site.register(Pizza_order_item)

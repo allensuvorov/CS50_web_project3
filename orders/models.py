@@ -134,6 +134,7 @@ class Pizza_order_item(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="pizzas")
 
     def __str__(self):
-        return f"{self.pizza} - {self.count}"
+        return f"{self.pizza} - {self.count} pizzas, with toppings: " + ", ".join([a.topping for a in self.toppings.all()]) #
+
 
 # endregion Order
