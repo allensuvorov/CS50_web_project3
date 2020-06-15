@@ -29,27 +29,32 @@
 
             <select name="pizza_name">
                 {% for pizza_name in pizza_names %}
-                <option value="{{ pizza_name.id }}">{{ pizza_name }}</option>
+                    <option value="{{ pizza_name.id }}">{{ pizza_name }}</option>
                 {% endfor %}
             </select>
 
             <select name="pizza_size">
                 {% for pizza_size in pizza_sizes %}
-                <option value="{{ pizza_size.id }}">{{ pizza_size }}</option>
+                    <option value="{{ pizza_size.id }}">{{ pizza_size }}</option>
                 {% endfor %}
             </select>
 
             <select name="pizza_topping_combo">
                 {% for pizza_topping_combo in pizza_topping_combos %}
-                <option value="{{ pizza_topping_combo.id}}">{{ pizza_topping_combo }}</option>
+                    <option value="{{ pizza_topping_combo.id}}">{{ pizza_topping_combo }}</option>
                 {% endfor %}
             </select>
 
             <select name="pizza_toppings" multiple>
                 {% for pizza_topping in pizza_toppings %}
-                <option value="{{ pizza_topping.id }}">{{ pizza_topping }}</option>
+                    <option value="{{ pizza_topping.id }}">{{ pizza_topping }}</option>
                 {% endfor %}
             </select>
+
+
+            <label for="count">Quantity (between 1 and 5):</label>
+            <input type="number" id="quantity" name="count" min="1" max="5" value="1">
+
 
             <input type="submit" value="Add to cart"/>
         </form>

@@ -75,7 +75,7 @@ def cart_view(request):
         pizza_name_id = int(request.POST["pizza_name"])
         pizza_size_id = int(request.POST["pizza_size"])
         pizza_topping_combo_id = int(request.POST["pizza_topping_combo"])
-        
+        pizza_count = int(request.POST["count"])
         
     
     # find pizza in BD
@@ -89,7 +89,7 @@ def cart_view(request):
     
 
     # obj.pizzas.add(pizza)
-    pizza_order = Pizza_order_item(pizza=pizza, count=1, order=obj)
+    pizza_order = Pizza_order_item(pizza=pizza, count=pizza_count, order=obj)
     pizza_order.save()
 
     # get all toppings
