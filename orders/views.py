@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status
+from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item
 
 # Create your views here.
 def index(request):
@@ -75,7 +75,9 @@ def cart_view(request):
         pizza_name_id = int(request.POST["pizza_name"])
         pizza_size_id = int(request.POST["pizza_size"])
         pizza_topping_combo_id = int(request.POST["pizza_topping_combo"])
-
+        
+        
+    
     # find pizza in BD
         pizza = Pizza.objects.get(name=pizza_name_id, size=pizza_size_id, combo=pizza_topping_combo_id)
     
@@ -85,5 +87,17 @@ def cart_view(request):
     except Pizza.DoesNotExist:
         return render(request, "orders/error.html", {"message": "That Pizza Does not Exist."})
     
-    obj.pizzas.add(pizza)
+
+    # obj.pizzas.add(pizza)
+    pizza_order = Pizza_order_item(pizza=pizza, count=1, order=obj)
+    pizza_order.save()
+
+    # get all toppings
+    pizza_toppings = request.POST.getlist("pizza_toppings")
+    print ("\n", pizza_toppings, "\n")
+    
+    if pizza_toppings is not None:
+        for topping in pizza_toppings:
+            pizza_order.toppings.add(topping)
+
     return HttpResponseRedirect(reverse("index"))

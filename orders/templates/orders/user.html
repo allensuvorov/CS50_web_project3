@@ -45,7 +45,7 @@
                 {% endfor %}
             </select>
 
-            <select name="pizza_topping" multiple>
+            <select name="pizza_toppings" multiple>
                 {% for pizza_topping in pizza_toppings %}
                 <option value="{{ pizza_topping.id }}">{{ pizza_topping }}</option>
                 {% endfor %}
