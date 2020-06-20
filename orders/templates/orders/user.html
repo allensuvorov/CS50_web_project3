@@ -23,17 +23,19 @@
     
     {% if pizzas %}
         <h3>Pick a Pizza</h3>
-        <form action="{% url 'cart' %}" method="post">
+        <form id="pizza_form" action="{% url 'cart' %}" method="post">
             {% csrf_token %}
             
 
             <select name="pizza_name">
+                <!-- <option>Select pizza</option> -->
                 {% for pizza_name in pizza_names %}
                     <option value="{{ pizza_name.id }}">{{ pizza_name }}</option>
                 {% endfor %}
             </select>
 
             <select name="pizza_size">
+                <!-- <option>Select size</option> -->
                 {% for pizza_size in pizza_sizes %}
                     <option value="{{ pizza_size.id }}">{{ pizza_size }}</option>
                 {% endfor %}
