@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
@@ -101,3 +101,37 @@ def cart_view(request):
             pizza_order.toppings.add(topping)
 
     return HttpResponseRedirect(reverse("index"))
+
+def price_view(request):
+    print ("\n","trying to get price", "\n")
+    if request.is_ajax and request.method == "GET":
+        # get data name from the client side.
+        print ("\n", "AJAX GET", "\n")
+
+        pizza_name_id = int(request.GET["pizza_name"])
+        pizza_size_id = int(request.GET["pizza_size"])
+        pizza_topping_combo_id = int(request.GET["pizza_topping_combo"])
+        # pizza_count = int(request.GET["count"])
+        
+        print ("\n", pizza_name_id, "\n")
+
+
+    try:
+    #     pizza_name_id = request.GET.get("pizza_name", None)
+        
+    #     # pizza_name_id = request.GET['pizza_name']
+    #     print ("\n", pizza_name_id, "\n")
+    #     # pizza_name_id = int(request.GET.get("pizza_name"))
+    #     # pizza_size_id = int(request.GET["pizza_size"])
+    #     # pizza_topping_combo_id = int(request.GET["pizza_topping_combo"])
+    #     # pizza_count = int(request.GET["count"])
+
+        pizza = Pizza.objects.get(name=pizza_name_id, size=pizza_size_id, combo=pizza_topping_combo_id)
+        price = pizza.price
+
+    except Pizza.DoesNotExist:
+        return JsonResponse ({'message': 'product not in menu'})
+    
+    print ("\n", price, "\n")
+
+    return JsonResponse ({'price': price})
