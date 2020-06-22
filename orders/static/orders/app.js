@@ -3,10 +3,29 @@ document.addEventListener('DOMContentLoaded', () =>{
     get_price();
     // const pizza_form=document.querySelector('#pizza_form');
     const pizza_form=document.forms.pizza_form;
+    const pizza_toppings=document.getElementById('pizza_toppings');
+    // console.log(pizza_toppings.value);
 
+    pizza_toppings.addEventListener('change', set_topping_combo);
     pizza_form.addEventListener('change', get_price);
       
 });
+
+function set_topping_combo() {
+
+    let options = pizza_toppings.options;
+    let count = 0;
+    for (let i=0; i<options.length; i++) {
+        if (options[i].selected) {
+            count++;
+        };
+    };
+
+    // console.log('number of selected toppings = ' + count);
+    
+    document.querySelector('#pizza_topping_combo_selected').innerHTML = count + " toppings";
+    
+};
 
 function get_price() {
     
@@ -27,8 +46,15 @@ function get_price() {
     request.onload = () => {
         const data = JSON.parse(request.responseText);
         console.log(data.price)
-        document.querySelector('#pizza_price').innerHTML = data.price;
-    }
+        if (data.price) {
+
+            document.querySelector('#pizza_price').innerHTML = data.price+"$";
+        }
+        else {
+            document.querySelector('#pizza_price').innerHTML = "00.00$";
+        };
+
+    };
     
 
     console.log(pizza_name);

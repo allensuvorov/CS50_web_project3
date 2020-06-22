@@ -130,7 +130,7 @@ def price_view(request):
         price = pizza.price
 
     except Pizza.DoesNotExist:
-        return JsonResponse ({'message': 'product not in menu'})
+        return JsonResponse ({'message': 'not in menu'})
     
     print ("\n", price, "\n")
 

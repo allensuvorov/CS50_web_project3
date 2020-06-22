@@ -52,12 +52,12 @@
                     <option value="{{ pizza_topping.id }}">{{ pizza_topping }}</option>
                 {% endfor %}
             </select>
-
+            <span id="pizza_topping_combo_selected">0 toppings</span>
 
             <label for="count">Quantity (between 1 and 5):</label>
             <input type="number" id="quantity" name="count" min="1" max="5" value="1">
 
-            <span id="pizza_price"> </span>
+            <span id="pizza_price"></span>
             <input type="submit" value="Add to cart"/>
         </form>
     {% endif %}
