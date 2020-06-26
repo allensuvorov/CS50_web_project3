@@ -21,13 +21,12 @@ class Pizza_size(models.Model):
 
 class Pizza_topping_combo(models.Model):
     combo = models.CharField(max_length=64)
-
+    count = models.IntegerField()
     def __str__(self):
         return f"{self.combo}"
 
 class Pizza_topping(models.Model):
     topping = models.CharField(max_length=64)
-
     def __str__(self):
         return f"{self.topping}"
 
