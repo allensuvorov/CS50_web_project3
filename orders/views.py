@@ -110,21 +110,18 @@ def price_view(request):
 
         pizza_name_id = int(request.GET["pizza_name"])
         pizza_size_id = int(request.GET["pizza_size"])
-        pizza_topping_combo_id = int(request.GET["pizza_topping_combo"])
+        
+        toppings_count = int(request.GET["toppings_count"])
+        pizza_topping_combo = Pizza_topping_combo.objects.get(count=toppings_count)
+        pizza_topping_combo_id = pizza_topping_combo.id
+
+        # pizza_topping_combo_id = int(request.GET["pizza_topping_combo"])
+
         # pizza_count = int(request.GET["count"])
         
         print ("\n", pizza_name_id, "\n")
 
-
     try:
-    #     pizza_name_id = request.GET.get("pizza_name", None)
-        
-    #     # pizza_name_id = request.GET['pizza_name']
-    #     print ("\n", pizza_name_id, "\n")
-    #     # pizza_name_id = int(request.GET.get("pizza_name"))
-    #     # pizza_size_id = int(request.GET["pizza_size"])
-    #     # pizza_topping_combo_id = int(request.GET["pizza_topping_combo"])
-    #     # pizza_count = int(request.GET["count"])
 
         pizza = Pizza.objects.get(name=pizza_name_id, size=pizza_size_id, combo=pizza_topping_combo_id)
         price = pizza.price

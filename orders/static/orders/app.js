@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', () =>{
     const pizza_toppings=document.getElementById('pizza_toppings');
     // console.log(pizza_toppings.value);
 
-    pizza_toppings.addEventListener('change', set_topping_combo);
+    // pizza_toppings.addEventListener('change', set_topping_combo);
     pizza_form.addEventListener('change', get_price);
       
 });
 
-function set_topping_combo() {
+function count_selected_toppings() {
 
     let options = pizza_toppings.options;
     let count = 0;
@@ -20,32 +20,32 @@ function set_topping_combo() {
             count++;
         };
     };
-
-    // console.log('number of selected toppings = ' + count);
     
     document.querySelector('#pizza_topping_combo_selected').innerHTML = count + " toppings";
-    
+    return (count);
 };
 
 function get_price() {
     
     console.log("get price event");
+    let count = count_selected_toppings();
+    console.log('number of selected toppings = ' + count);
     
     // get data from user selection
     const pizza_size = document.getElementById('pizza_size').value;
     const pizza_topping_combo = document.getElementById('pizza_topping_combo').value;
     const pizza_name = document.getElementById('pizza_name').value;
-
+    
     // Initialize new request
     const request = new XMLHttpRequest();
 
-    let URL = "price?" + "pizza_name=" + pizza_name + "&pizza_topping_combo=" + pizza_topping_combo +"&pizza_size=" + pizza_size
-    request.open('GET', URL, true)
+    let URL = "price?" + "pizza_name=" + pizza_name + "&pizza_topping_combo=" + pizza_topping_combo +"&pizza_size=" + pizza_size + "&toppings_count=" + count;
+    request.open('GET', URL, true);
 
     // Callback function for when request completes
     request.onload = () => {
         const data = JSON.parse(request.responseText);
-        console.log(data.price)
+        console.log(data.price);
         if (data.price) {
 
             document.querySelector('#pizza_price').innerHTML = data.price+"$";
