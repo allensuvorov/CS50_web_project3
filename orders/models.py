@@ -115,10 +115,7 @@ class Order(models.Model):
 
     address = models.CharField(max_length=64, blank=True)
     date = models.DateField(auto_now=True)
-    # pizzas = models.ManyToManyField(Pizza, blank=True)
-    # subs = models.ManyToManyField(Sub, blank=True)
-    # pastas = models.ManyToManyField(Pasta, blank=True)
-    # dinner_platters = models.ManyToManyField(Dinner_platter, blank=True)
+    price = models.DecimalField(max_digits=7,decimal_places=2)
     
     # cart = models.BooleanField(default=True, blank=True)
       
