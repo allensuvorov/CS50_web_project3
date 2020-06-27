@@ -41,23 +41,28 @@
                 {% endfor %}
             </select>
 
-            <select id="pizza_topping_combo" name="pizza_topping_combo">
+            <!-- <select id="pizza_topping_combo" name="pizza_topping_combo">
                 {% for pizza_topping_combo in pizza_topping_combos %}
                     <option value="{{ pizza_topping_combo.id}}">{{ pizza_topping_combo }}</option>
                 {% endfor %}
-            </select>
-
+            </select> -->
+            
             <select id="pizza_toppings" name="pizza_toppings" multiple>
                 {% for pizza_topping in pizza_toppings %}
-                    <option value="{{ pizza_topping.id }}">{{ pizza_topping }}</option>
+                <option value="{{ pizza_topping.id }}">{{ pizza_topping }}</option>
                 {% endfor %}
             </select>
-            <span id="pizza_topping_combo_selected">0 toppings</span>
-
-            <label for="count">Quantity (between 1 and 5):</label>
-            <input type="number" id="quantity" name="count" min="1" max="5" value="1">
+            
+            <select name="pizza_topping_combo">
+                <option id="pizza_topping_combo"></option>
+            </select>
+        
+            <span id="pizza_topping_combo_selected" name="pizza_topping_combo"> </span>
 
             <span id="pizza_price"></span>
+            <label for="count">Quantity (between 1 and 5):</label>
+            <input type="number" id="quantity" name="count" min="1" max="5" value="1">
+            
             <input type="submit" value="Add to cart"/>
         </form>
     {% endif %}

@@ -20,8 +20,14 @@ function count_selected_toppings() {
             count++;
         };
     };
+
+    // document.querySelector('#pizza_topping_combo_selected').innerHTML = count + " toppings";
     
-    document.querySelector('#pizza_topping_combo_selected').innerHTML = count + " toppings";
+    // if count is higher than 4, then just return 4
+    if (count>4) {
+        count = 4;
+    };
+    
     return (count);
 };
 
@@ -30,16 +36,16 @@ function get_price() {
     console.log("get price event");
     let count = count_selected_toppings();
     console.log('number of selected toppings = ' + count);
-    
+
     // get data from user selection
     const pizza_size = document.getElementById('pizza_size').value;
-    const pizza_topping_combo = document.getElementById('pizza_topping_combo').value;
+    // const pizza_topping_combo = document.getElementById('pizza_topping_combo').value;
     const pizza_name = document.getElementById('pizza_name').value;
     
     // Initialize new request
     const request = new XMLHttpRequest();
 
-    let URL = "price?" + "pizza_name=" + pizza_name + "&pizza_topping_combo=" + pizza_topping_combo +"&pizza_size=" + pizza_size + "&toppings_count=" + count;
+    let URL = "price?" + "pizza_name=" + pizza_name + "&pizza_size=" + pizza_size + "&toppings_count=" + count;
     request.open('GET', URL, true);
 
     // Callback function for when request completes
@@ -52,6 +58,14 @@ function get_price() {
         }
         else {
             document.querySelector('#pizza_price').innerHTML = "00.00$";
+        };
+
+        if (data.combo) {
+            
+            const combo = document.querySelector('#pizza_topping_combo')
+            combo.innerHTML = data.combo;
+            combo.setAttribute("value", data.combo_id)
+
         };
 
     };

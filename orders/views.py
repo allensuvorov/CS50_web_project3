@@ -111,6 +111,7 @@ def price_view(request):
         pizza_name_id = int(request.GET["pizza_name"])
         pizza_size_id = int(request.GET["pizza_size"])
         
+        # get number of toppings selected
         toppings_count = int(request.GET["toppings_count"])
         pizza_topping_combo = Pizza_topping_combo.objects.get(count=toppings_count)
         pizza_topping_combo_id = pizza_topping_combo.id
@@ -125,10 +126,15 @@ def price_view(request):
 
         pizza = Pizza.objects.get(name=pizza_name_id, size=pizza_size_id, combo=pizza_topping_combo_id)
         price = pizza.price
+        combo = pizza_topping_combo.combo
 
     except Pizza.DoesNotExist:
         return JsonResponse ({'message': 'not in menu'})
     
     print ("\n", price, "\n")
 
-    return JsonResponse ({'price': price})
+    return JsonResponse ({
+        'price': price,
+        'combo': combo,
+        'combo_id': pizza_topping_combo_id
+        })
