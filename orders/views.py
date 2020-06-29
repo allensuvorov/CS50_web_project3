@@ -22,6 +22,7 @@ def index(request):
         "pizza_toppings": Pizza_topping.objects.all(),
         "cart": Order.objects.filter(user=request.user, status=1),
         "user": request.user
+
     }
     return render(request, "orders/user.html", context)
 
@@ -91,6 +92,22 @@ def cart_view(request):
     # obj.pizzas.add(pizza)
     pizza_order = Pizza_order_item(pizza=pizza, count=pizza_count, order=obj)
     pizza_order.save()
+
+
+    # calculate total price
+    total_price = 0
+    pizzas = obj.pizzas.all()
+    for p in pizzas:
+        order_item_price = p.pizza.price * p.count
+        print (order_item_price)
+        total_price += order_item_price
+    
+    print ("\n", total_price, "\n")
+
+    # save total price to current order
+    obj.price = total_price
+    obj.save()
+    # print (obj.price)
 
     # get all toppings
     pizza_toppings = request.POST.getlist("pizza_toppings")

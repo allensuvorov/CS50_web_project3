@@ -53,21 +53,19 @@
 
             <span id="pizza_price"></span>
             <label for="count">Quantity (between 1 and 5):</label>
-            <input type="number" id="quantity" name="count" min="1" max="5" value="1">
+            <input type="number" id="quantity" name="count" min="1" max="50" value="1">
             
             <input type="submit" value="Add to cart"/>
         </form>
     {% endif %}
     {% if cart %}
         <h3>Shopping Cart</h3>
+        <span id="total_price">Total price: {{ cart.0.price }} $</span>
         
         <!-- <p> {{ cart }} </p> -->
         
         <ul>
             {% for unit in cart %}
-
-                <!-- <p>{{ unit }} </p>
-                <p>{{ unit.pizzas.all }}</p> -->
 
                 {% for pizza in unit.pizzas.all %}
                     <li>{{ pizza }}</li>            
@@ -75,6 +73,14 @@
                 
             {% endfor %}
         </ul>    
+
+        <!-- will be able to use this shorter cycle when we can get just the order and not a list of orders.  -->
+        <!-- <ul>
+            {% for pizza in cart.pizzas.all %}
+                <li>{{ pizza }}</li>            
+            {% endfor %}
+                
+        </ul>   -->
             
     {% endif %}
 {% endblock %}
