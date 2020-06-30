@@ -60,20 +60,18 @@
     {% endif %}
     {% if cart %}
         <h3>Shopping Cart</h3>
-        <span id="total_price">Total price: {{ cart.0.price }} $</span>
+        
         
         <!-- <p> {{ cart }} </p> -->
         
         <ul>
             {% for unit in cart %}
-
                 {% for pizza in unit.pizzas.all %}
                     <li>{{ pizza }}</li>            
                 {% endfor %}
-                
             {% endfor %}
         </ul>    
-
+        <span id="total_price">Total price: {{ cart.0.price }} $</span>
         <!-- will be able to use this shorter cycle when we can get just the order and not a list of orders.  -->
         <!-- <ul>
             {% for pizza in cart.pizzas.all %}
@@ -83,4 +81,7 @@
         </ul>   -->
             
     {% endif %}
+    <form>
+        {% csrf_token %}
+    </form>
 {% endblock %}
