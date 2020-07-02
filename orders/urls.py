@@ -9,5 +9,5 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"), # to login page with message "logged out"
     path("cart", views.cart_view, name="cart"), # to add an item to shopping cart
     path("price", views.price_view, name="price"), # for getting price via ajax
-    path("order", views.order_view, name ="order") # for placing an order
+    path("<int:order_id>/order", views.order_view, name ="order") # for placing an order
 ]

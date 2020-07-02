@@ -156,6 +156,20 @@ def price_view(request):
         'combo_id': pizza_topping_combo_id
         })
 
-def order_view(request):
-    print ("\n","trying to put order price", "\n")
-    return render(request, "orders/success.html", {"message": "Order accepted! Order number:"})
+def order_view(request, order_id): # get order ID
+    print ("\n","trying to put order #: " + str(order_id), "\n")
+    
+    # change the status of the order
+    order = Order.objects.get(pk=order_id)
+    
+    second_order_status = Order_status.objects.get(pk=2)
+    print ("second_order_status is:" + str(second_order_status))
+
+    order.status = second_order_status
+    order.save()
+    print ("new order_status is:" + str(order.status))
+
+    
+    # add address to the order
+
+    return render(request, "orders/success.html", {"message": "Order accepted! Order number: " + str(order.id)})

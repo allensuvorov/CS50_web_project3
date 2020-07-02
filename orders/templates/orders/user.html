@@ -78,17 +78,16 @@
                 <li>{{ pizza }}</li>            
             {% endfor %}
         </ul>   -->
-            
+      
     
-        <h2>Submit Order</h2>
+        <h2>Submit Order: {{ cart.0.id }} </h2>
 
-        <form action="{% url 'order' %}" method="post">
+        <form action="{% url 'order' cart.0.id %}" method="post">
             {% csrf_token %}
             <label for="address">Add Address (city, street)</label><br>
             <input id="address" name="address" type="text"/>
             <input type="submit" value="Submit Order"/>
         </form>
-
 
     {% endif %}
 {% endblock %}
