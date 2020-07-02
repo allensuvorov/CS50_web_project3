@@ -69,6 +69,7 @@ def cart_view(request):
     obj, created = Order.objects.get_or_create(
         user=request.user,
         status=Order_status.objects.get(pk=1)
+        # price = 0
         )
     print ("\n", obj, "\n")
 
@@ -166,10 +167,13 @@ def order_view(request, order_id): # get order ID
     print ("second_order_status is:" + str(second_order_status))
 
     order.status = second_order_status
+
+    # add address to the order
+    address = request.POST["address"]
+    order.address = address
+    
     order.save()
     print ("new order_status is:" + str(order.status))
-
-    
-    # add address to the order
+    print ("address is:" + order.address)
 
     return render(request, "orders/success.html", {"message": "Order accepted! Order number: " + str(order.id)})
