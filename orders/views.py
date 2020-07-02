@@ -155,3 +155,7 @@ def price_view(request):
         'combo': combo,
         'combo_id': pizza_topping_combo_id
         })
+
+def order_view(request):
+    print ("\n","trying to put order price", "\n")
+    return render(request, "orders/success.html", {"message": "Order accepted! Order number:"})
