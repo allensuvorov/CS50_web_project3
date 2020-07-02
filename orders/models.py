@@ -115,7 +115,7 @@ class Order(models.Model):
 
     address = models.CharField(max_length=64, blank=True)
     date = models.DateField(auto_now=True)
-    price = models.DecimalField(max_digits=7,decimal_places=2, blank=True)
+    price = models.DecimalField(max_digits=7,decimal_places=2, blank=True, null=True)
     
     # cart = models.BooleanField(default=True, blank=True)
       

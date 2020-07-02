@@ -80,7 +80,7 @@
         </ul>   -->
       
     
-        <h2>Submit Order: {{ cart.0.id }} </h2>
+        <h2>Submit Order # {{ cart.0.id }} </h2>
 
         <form action="{% url 'order' cart.0.id %}" method="post">
             {% csrf_token %}
