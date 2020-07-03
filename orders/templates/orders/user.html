@@ -10,7 +10,27 @@
         <li>Currently logged in as: {{ user.username}}, {{ user.id }}</li>
         <li><a href="{% url 'logout' %}">Logout</a></li>
     </ul>
+    
+    {% if pending_orders %}
+        <h2>Pending Orders</h2>
+        {% for order in pending_orders %}
+        <li>
+            {{ order }}
+        </li>
+        {% endfor %}
+    {% endif %}
+
+    {% if delivered_orders %}
+        <h2>Delivered Orders</h2>
+        {% for order in delivered_orders %}
+        <li>
+            {{ order }}
+        </li>
+        {% endfor %}
+    {% endif %}
+            
     <h2>Menu</h2>
+    
     <ul>
         {% for pizza in pizzas %}
         <li>
