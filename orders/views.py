@@ -21,6 +21,7 @@ def index(request):
         "pizza_topping_combos": Pizza_topping_combo.objects.all(),
         "pizza_toppings": Pizza_topping.objects.all(),
         "cart": Order.objects.filter(user=request.user, status=1),
+        "orders": Order.objects.filter(user=request.user, status = 2),
         "user": request.user
 
     }

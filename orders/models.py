@@ -120,7 +120,7 @@ class Order(models.Model):
     # cart = models.BooleanField(default=True, blank=True)
       
     def __str__(self):
-        return f"#{self.id}, NAME: {self.user}, STATUS: {self.status}, ADDRESS: {self.address}"
+        return f"#{self.id}, NAME: {self.user}, STATUS: {self.status}, ADDRESS: {self.address}, {self.date}, {self.price}$"
         # , {self.pizzas.all()}, {self.subs.all()}"
 
 class Pizza_order_item(models.Model):
