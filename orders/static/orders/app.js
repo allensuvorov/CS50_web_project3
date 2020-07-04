@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', () =>{
     get_price();
     // const pizza_form=document.querySelector('#pizza_form');
     const pizza_form=document.forms.pizza_form;
+    
     const pizza_toppings=document.getElementById('pizza_toppings');
     // console.log(pizza_toppings.value);
-
-    // pizza_toppings.addEventListener('change', set_topping_combo);
+    
     pizza_form.addEventListener('change', get_price);
       
 });
