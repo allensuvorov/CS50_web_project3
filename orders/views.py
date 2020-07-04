@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item
+from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub, Sub_add_on, Sub_name, Sub_size
 
 # Create your views here.
 def index(request):
@@ -23,8 +23,11 @@ def index(request):
         "cart": Order.objects.filter(user=request.user, status=1),
         "pending_orders": Order.objects.filter(user=request.user, status = 2),
         "delivered_orders": Order.objects.filter(user=request.user, status = 3),
-        "user": request.user
-
+        "user": request.user,
+        "subs": Sub.objects.all(),
+        "sub_names": Sub_name.objects.all(),
+        "sub_sizes": Sub_size.objects.all(),
+        "sub_add_ons": Sub_add_on.objects.all()
     }
     return render(request, "orders/user.html", context)
 

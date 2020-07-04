@@ -29,7 +29,7 @@
         {% endfor %}
     {% endif %}
             
-    <h2>Menu</h2>
+    <!-- <h2>Menu</h2>
     
     <ul>
         {% for pizza in pizzas %}
@@ -37,10 +37,11 @@
             {{ pizza }}
         </li>
         {% endfor %}
-    </ul>
+    </ul> -->
     
     <h2>Add Item to Shopping Cart</h2>
     
+    <!-- pizza selection -->
     {% if pizzas %}
         <h3>Pick a Pizza</h3>
         <form id="pizza_form" action="{% url 'cart' %}" method="post">
@@ -72,12 +73,47 @@
             </select>
 
             <span id="pizza_price"></span>
-            <label for="count">Quantity (between 1 and 5):</label>
+            <label for="count">Quantity (between 1 and 50):</label>
             <input type="number" id="quantity" name="count" min="1" max="50" value="1">
             
             <input type="submit" value="Add to cart"/>
         </form>
     {% endif %}
+
+    <!-- subs selection -->
+    {% if subs %}
+        <h3>Pick a Sub</h3>
+        <form id="sub_form" action="{% url 'cart' %}" method="POST">
+            {% csrf_token %}
+
+            <select name="sub_name">
+                {% for sub_name in sub_names %}
+                    <option value="{{ sub_name.id }}">{{ sub_name }}</option>
+                {% endfor %}
+            </select>
+            
+            <select name="sub_size">
+                {% for sub_size in sub_sizes %}
+                    <option value="{{ sub_size.id }}">{{ sub_size }} </option>"
+                {% endfor %}
+            </select>
+
+            <select name="sub_add_on" multiple>
+                {% for sub_add_on in sub_add_ons %}
+                    <option value="{{ sub_add_on.id }}">{{ sub_add_on }} </option>"
+                {% endfor %}
+            </select>
+
+            <span id="sub_price"></span>
+            <label for="count">Quantity (between 1 and 50):</label>
+            <input type="number" id="quantity" name="count" min="1" max="50" value="1">
+
+            <input type="submit" value="Add to cart"/>
+        </form>
+
+    {% endif %}
+
+
     {% if cart %}
         <h3>Shopping Cart</h3>
         
