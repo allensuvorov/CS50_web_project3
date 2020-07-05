@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub, Sub_add_on, Sub_name, Sub_size, Pasta, Salad, Dinner_platter
+from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub, Sub_add_on, Sub_name, Sub_size, Pasta, Salad, Dinner_platter, Dinner_platter_size
 
 # Create your views here.
 def index(request):
@@ -30,8 +30,8 @@ def index(request):
         "sub_add_ons": Sub_add_on.objects.all(),
         "pasta": Pasta.objects.all(),
         "salad": Salad.objects.all(),
-        "dinner_platter": Dinner_platter.objects.all()
-
+        "dinner_platter": Dinner_platter.objects.all(),
+        "dinner_platter_size": Dinner_platter_size
 
     }
     return render(request, "orders/user.html", context)
