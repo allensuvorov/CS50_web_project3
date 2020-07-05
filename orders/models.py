@@ -88,13 +88,20 @@ class Salad(models.Model):
     def __str__(self):
         return f"{self.name} {self.price}"
 
+class Dinner_platter_size(models.Model):
+    size = models.CharField(max_length=64)
+
+    def __str__(self):
+        return f"{self.size}"
+
 class Dinner_platter(models.Model):
 
     name = models.CharField(max_length=64)
+    size = models.ForeignKey(Dinner_platter_size, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
-        return f"{self.name} {self.price}"
+        return f"{self.name} {self.size} {self.price}"
 # endregion Pasta, Salad, Dinner Platter
 
 # region Order
