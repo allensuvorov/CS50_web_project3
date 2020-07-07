@@ -11,6 +11,7 @@
         <li><a href="{% url 'logout' %}">Logout</a></li>
     </ul>
     
+    <!-- #region Orders -->
     {% if pending_orders %}
         <h2>Pending Orders</h2>
         {% for order in pending_orders %}
@@ -28,10 +29,12 @@
         </li>
         {% endfor %}
     {% endif %}
-            
-    <!-- <h2>Menu</h2>
+    <!-- #endregion Orders -->
+
+    <!-- #region Menu -->
+    <h2>Menu</h2>
     
-    <ul>
+    <!-- <ul>
         {% for pizza in pizzas %}
         <li>
             {{ pizza }}
@@ -39,7 +42,7 @@
         {% endfor %}
     </ul> -->
     
-    <h2>Add Item to Shopping Cart</h2>
+    <!-- <h2>Add Item to Shopping Cart</h2> -->
     
     <!-- pizza selection -->
     {% if pizzas %}
@@ -110,10 +113,56 @@
 
             <input type="submit" value="Add to cart"/>
         </form>
-
     {% endif %}
 
+    {% if pastas %}
+        <h3>Pick a Pasta</h3>
+        <form id="pasta_form" action="{% url 'cart' %}" method="POST">
+            {% csrf_token %}
+            <select name="pasta_name_price">
+                {% for pasta in pastas %}
+                    <option value="{{ pasta.id }}">{{ pasta }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Add to cart">
+        </form>
+    {% endif %}
 
+    {% if salads %}
+        <h3>Pick a Salad</h3>
+        <form id="salad_form" action="{% url 'cart' %}" method="POST">
+            {% csrf_token %}
+            <select name="salad_name_price">
+                {% for salad in salads %}
+                    <option value="{{ salad.id }}">{{ salad }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Add to cart">
+        </form>
+    {% endif %}
+
+    {% if dinner_platters %}
+        <h3>Pick a Dinner Platter</h3>
+        <form id="dinner_platter" action="{% url 'cart' %}" method="POST">
+            {% csrf_token %}
+            <select name="dinner_platter_name">
+                {% for dinner_platter in dinner_platters %}
+                    <option value="{{ dinner_platter.id }}">{{ dinner_platter }}</option>
+                {% endfor %}
+            </select>
+            <select name="dinner_platter_size">
+                {% for size in dinner_platter_sizes %}
+                    <option value="{{ size.id }}">{{ size }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" value="Add to cart">
+        </form>
+    {% endif %}
+
+    <!-- #endregion Menu -->
+
+    <!-- #region Cart -->
     {% if cart %}
         <h3>Shopping Cart</h3>
         
@@ -146,4 +195,6 @@
         </form>
 
     {% endif %}
+    <!-- #endregion Cart -->
+
 {% endblock %}

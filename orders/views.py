@@ -28,10 +28,10 @@ def index(request):
         "sub_names": Sub_name.objects.all(),
         "sub_sizes": Sub_size.objects.all(),
         "sub_add_ons": Sub_add_on.objects.all(),
-        "pasta": Pasta.objects.all(),
-        "salad": Salad.objects.all(),
-        "dinner_platter": Dinner_platter.objects.all(),
-        "dinner_platter_size": Dinner_platter_size
+        "pastas": Pasta.objects.all(),
+        "salads": Salad.objects.all(),
+        "dinner_platters": Dinner_platter.objects.all(),
+        "dinner_platter_sizes": Dinner_platter_size.objects.all()
 
     }
     return render(request, "orders/user.html", context)
