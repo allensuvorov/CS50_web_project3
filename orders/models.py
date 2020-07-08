@@ -88,6 +88,12 @@ class Salad(models.Model):
     def __str__(self):
         return f"{self.name} {self.price}"
 
+class Dinner_platter_name(models.Model):
+    name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return f"{self.name}"
+        
 class Dinner_platter_size(models.Model):
     size = models.CharField(max_length=64)
 
@@ -96,7 +102,7 @@ class Dinner_platter_size(models.Model):
 
 class Dinner_platter(models.Model):
 
-    name = models.CharField(max_length=64)
+    name = models.ForeignKey(Dinner_platter_name, on_delete=models.CASCADE)
     size = models.ForeignKey(Dinner_platter_size, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
