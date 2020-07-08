@@ -146,8 +146,8 @@
         <form id="dinner_platter" action="{% url 'cart' %}" method="POST">
             {% csrf_token %}
             <select name="dinner_platter_name">
-                {% for dinner_platter in dinner_platters %}
-                    <option value="{{ dinner_platter.id }}">{{ dinner_platter }}</option>
+                {% for name in dinner_platter_names %}
+                    <option value="{{ name.id }}">{{ name }}</option>
                 {% endfor %}
             </select>
             <select name="dinner_platter_size">
@@ -164,7 +164,7 @@
 
     <!-- #region Cart -->
     {% if cart %}
-        <h3>Shopping Cart</h3>
+        <h2>Shopping Cart</h2>
         
         <ul>
             {% for unit in cart %}

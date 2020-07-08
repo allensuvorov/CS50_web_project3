@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub, Sub_add_on, Sub_name, Sub_size, Pasta, Salad, Dinner_platter, Dinner_platter_size
+from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub, Sub_add_on, Sub_name, Sub_size, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size
 
 # Create your views here.
 def index(request):
@@ -31,6 +31,7 @@ def index(request):
         "pastas": Pasta.objects.all(),
         "salads": Salad.objects.all(),
         "dinner_platters": Dinner_platter.objects.all(),
+        "dinner_platter_names": Dinner_platter_name.objects.all(),
         "dinner_platter_sizes": Dinner_platter_size.objects.all()
 
     }
