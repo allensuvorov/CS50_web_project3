@@ -38,7 +38,7 @@ class Pizza(models.Model):
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
-        return f"pizza {self.name} size {self.size} with {self.combo} - {self.price} dollars" 
+        return f"pizza {self.name} size {self.size} with {self.combo} - {self.price}$" 
 
 # endregion Pizza models
 
@@ -58,9 +58,10 @@ class Sub_size(models.Model):
 
 class Sub_add_on(models.Model):
     add_on = models.CharField(max_length=64)
-
+    price = models.DecimalField(max_digits=5,decimal_places=2)
+    
     def __str__(self):
-        return f"{self.add_on}"
+        return f"{self.add_on} - {self.price}$"
 
 class Sub(models.Model):
     name = models.ForeignKey(Sub_name, on_delete=models.CASCADE)
@@ -69,7 +70,7 @@ class Sub(models.Model):
     price = models.DecimalField(max_digits=5,decimal_places=2)
     
     def __str__(self):
-        return f"{self.name} {self.size} - {self.price} dollars"
+        return f"{self.name} {self.size} - {self.price}$"
 
 # endregion Sub models
 
@@ -93,7 +94,7 @@ class Dinner_platter_name(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-        
+
 class Dinner_platter_size(models.Model):
     size = models.CharField(max_length=64)
 
