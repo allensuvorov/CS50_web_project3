@@ -139,7 +139,7 @@ class Order(models.Model):
 
 class Pizza_order_item(models.Model):
     pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, blank=True)
-    toppings = models.ManyToManyField(Pizza_topping, on_delete=models.CASCADE, blank=True)
+    toppings = models.ManyToManyField(Pizza_topping, blank=True)
     count = models.IntegerField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="pizzas")
 
@@ -148,7 +148,7 @@ class Pizza_order_item(models.Model):
 
 class Sub_order_item(models.Model):
     sub = models.ForeignKey(Sub, on_delete=models.CASCADE, blank=True)
-    add_ons = models.ManyToManyField(Sub_add_on, on_delete=models.CASCADE, blank=True)
+    add_ons = models.ManyToManyField(Sub_add_on, blank=True)
     count = models.IntegerField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="subs")
 
