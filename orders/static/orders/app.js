@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     // const pizza_form=document.querySelector('#pizza_form');
     const pizza_form=document.forms.pizza_form;
     
-    const pizza_toppings=document.getElementById('pizza_toppings');
+    // const pizza_toppings=document.getElementById('pizza_toppings');
     // console.log(pizza_toppings.value);
     
     pizza_form.addEventListener('change', get_price);
@@ -42,7 +42,7 @@ function get_price() {
     // const pizza_topping_combo = document.getElementById('pizza_topping_combo').value;
     const pizza_name = document.getElementById('pizza_name').value;
     
-    // Initialize new request
+    // Initialize new AJAX request
     const request = new XMLHttpRequest();
 
     let URL = "price?" + "pizza_name=" + pizza_name + "&pizza_size=" + pizza_size + "&toppings_count=" + count;
