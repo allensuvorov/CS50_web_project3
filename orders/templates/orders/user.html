@@ -173,6 +173,10 @@
                 {% for pizza in unit.pizzas.all %}
                     <li>{{ pizza }}</li>            
                 {% endfor %}
+
+                {% for sub in unit.subs.all %}
+                    <li>{{ sub }}</li>
+                {% endfor %}
             {% endfor %}
         </ul>    
         

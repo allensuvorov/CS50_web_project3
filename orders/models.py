@@ -153,5 +153,30 @@ class Sub_order_item(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="subs")
 
     def __str__(self):
-        return f"{self.sub} - {self.count} sub, with add-ons: " + ", ".join([a.add_on for a in self.add_ons.all()])
+        return f"{self.sub} - {self.count} subs, with add-ons: " + ", ".join([a.add_on for a in self.add_ons.all()])
+
+class Pasta_order_item(models.Model):
+    pasta = models.ForeignKey(Pasta, on_delete=models.CASCADE, blank=True)
+    count = models.IntegerField()
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="pastas")
+
+    def __str__(self):
+        return f"{self.sub} - {self.count} pastas"
+
+class Salad_order_item(models.Model):
+    salad = models.ForeignKey(Salad, on_delete=models.CASCADE, blank=True)
+    count = models.IntegerField()
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="salads")
+
+    def __str__(self):
+        return f"{self.sub} - {self.count} salads"
+
+class Dinner_platter_order_item(models.Model):
+    dinner_platter = models.ForeignKey(Dinner_platter, on_delete=models.CASCADE, blank=True)
+    count = models.IntegerField()
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="dinner_platters")
+
+    def __str__(self):
+        return f"{self.sub} - {self.count} dinner platters"
+
 # endregion Order
