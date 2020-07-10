@@ -177,6 +177,18 @@
                 {% for sub in unit.subs.all %}
                     <li>{{ sub }}</li>
                 {% endfor %}
+
+                {% for pasta in unit.pastas.all %}
+                    <li>{{ pasta }}</li>
+                {% endfor %}
+
+                {% for salad in unit.salads.all %}
+                    <li>{{ salad }}</li>
+                {% endfor %}
+
+                {% for dinner_platter in unit.dinner_platters.all %}
+                    <li>{{ dinner_platter }}</li>
+                {% endfor %}
             {% endfor %}
         </ul>    
         

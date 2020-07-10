@@ -1,13 +1,29 @@
 from django.contrib import admin
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Sub, Sub_name, Sub_size, Sub_add_on, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size, Order, Order_status, Pizza_order_item, Sub_order_item
+from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Sub, Sub_name, Sub_size, Sub_add_on, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size, Order, Order_status, Pizza_order_item, Sub_order_item, Pasta_order_item, Salad_order_item, Dinner_platter_order_item
 
 class PizzaOrderItemInLine(admin.TabularInline):
     model = Pizza_order_item
-    extra = 1
+    extra = 0
+
+class SubOrderItemInLine(admin.TabularInline):
+    model = Sub_order_item
+    extra = 0
+
+class PastaOrderItemInline(admin.TabularInline):
+    model = Pasta_order_item
+    extra = 0
+
+class SaladOrderItemInline(admin.TabularInline):
+    model = Salad_order_item
+    extra = 0
+
+class DinnerPlatterOrderItemInline(admin.TabularInline):
+    model = Dinner_platter_order_item
+    extra = 0
 
 class OrderAdmin (admin.ModelAdmin):
-    inlines = [PizzaOrderItemInLine]
+    inlines = [PizzaOrderItemInLine, SubOrderItemInLine, PastaOrderItemInline, SaladOrderItemInline, DinnerPlatterOrderItemInline]
 
 # Register your models here.
 admin.site.register(Pizza)
@@ -28,3 +44,6 @@ admin.site.register(Order, OrderAdmin)
 admin.site.register(Order_status)
 admin.site.register(Pizza_order_item)
 admin.site.register(Sub_order_item)
+admin.site.register(Pasta_order_item)
+admin.site.register(Salad_order_item)
+admin.site.register(Dinner_platter_order_item)
