@@ -8,6 +8,7 @@ urlpatterns = [
     path("login", views.login_view, name="login"), # login form, once signed-in - to index, other - to login page with error
     path("logout", views.logout_view, name="logout"), # to login page with message "logged out"
     path("cart", views.cart_view, name="cart"), # to add an item to shopping cart
-    path("price", views.price_view, name="price"), # for getting price via ajax
-    path("<int:order_id>/order", views.order_view, name ="order") # for placing an order
+    path("price", views.price_view, name="price"), # for getting pizza price via AJAX
+    path("<int:order_id>/order", views.order_view, name ="order"), # for placing an order
+    path("sub_price", views.sub_price_view, name="sub_price") # getting sub price via AJAX
 ]

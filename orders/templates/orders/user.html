@@ -91,13 +91,13 @@
         <form id="sub_form" action="{% url 'cart' %}" method="POST">
             {% csrf_token %}
 
-            <select name="sub_name">
+            <select id="sub_name" name="sub_name">
                 {% for sub_name in sub_names %}
                     <option value="{{ sub_name.id }}">{{ sub_name }}</option>
                 {% endfor %}
             </select>
             
-            <select name="sub_size">
+            <select id="sub_size" name="sub_size">
                 {% for sub_size in sub_sizes %}
                     <option value="{{ sub_size.id }}">{{ sub_size }} </option>"
                 {% endfor %}

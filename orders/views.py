@@ -132,10 +132,10 @@ def cart_view(request):
     return HttpResponseRedirect(reverse("index"))
 
 def price_view(request):
-    print ("\n","trying to get price", "\n")
+    print ("\n","trying to get pizza price", "\n")
     if request.is_ajax and request.method == "GET":
         # get data name from the client side.
-        print ("\n", "AJAX GET", "\n")
+        print ("\n", "AJAX GET for PIZZA", "\n")
 
         pizza_name_id = int(request.GET["pizza_name"])
         pizza_size_id = int(request.GET["pizza_size"])
@@ -146,7 +146,6 @@ def price_view(request):
         pizza_topping_combo_id = pizza_topping_combo.id
 
         # pizza_topping_combo_id = int(request.GET["pizza_topping_combo"])
-
         # pizza_count = int(request.GET["count"])
         
         print ("\n", pizza_name_id, "\n")
@@ -166,6 +165,28 @@ def price_view(request):
         'price': price,
         'combo': combo,
         'combo_id': pizza_topping_combo_id
+        })
+
+def sub_price_view(request):
+    print ("\n","trying to get sub price", "\n")
+    if request.is_ajax and request.method == "GET":
+        # get data name from the client side.
+        print ("\n", "AJAX GET for SUB", "\n")
+
+        sub_name_id = int(request.GET["sub_name"])
+        sub_size_id = int(request.GET["sub_size"])
+    try:
+
+        sub = Sub.objects.get(name=sub_name_id, size=sub_size_id)
+        price = sub.price
+
+    except Sub.DoesNotExist:
+        return JsonResponse ({'message': 'not in menu'})
+    
+    print ("\n", price, "\n")
+
+    return JsonResponse ({
+        'price': price
         })
 
 def order_view(request, order_id): # get order ID

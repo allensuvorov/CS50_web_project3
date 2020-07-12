@@ -89,17 +89,45 @@ function get_add_ons_price_total(){
             if (options[i].selected) {
                 
                 total = total + parseFloat(options[i].dataset.price);
-                count++;
+
             };
         };
         return(total);
 };
 
 function get_sub_price() {
-    console.log("getting price for add-ons");
+    console.log("getting sub price");
     let add_ons_price_total = get_add_ons_price_total();
-        
+
+    // get data from user selection
+    const sub_name = document.getElementById('sub_name').value;
+    const sub_size = document.getElementById('sub_size').value;
+
+    // Initialize new AJAX request
+    const request = new XMLHttpRequest();
+
+    let URL = "sub_price?" + "sub_name=" + sub_name + "&sub_size=" + sub_size;
+    // send AJAX request
+    request.open('GET', URL, true);
     
+    // Callback function for when request completes
+    request.onload = () => {
+        const data = JSON.parse(request.responseText);
+        console.log(data.price);
+        if (data.price) {
+            console.log(typeof(data.price));
+            let total_sub_price = (parseFloat(data.price)+add_ons_price_total).toFixed(2);
+            document.querySelector('#sub_price').innerHTML = total_sub_price+"$";
+        }
+        else {
+            document.querySelector('#sub_price').innerHTML = "00.00$";
+        };
+
+    };
+    // console.log(pizza_name);
+
+    request.send();
+
 
 };
 
