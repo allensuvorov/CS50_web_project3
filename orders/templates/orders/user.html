@@ -147,17 +147,19 @@
         <h3>Pick a Dinner Platter</h3>
         <form id="dinner_platter_form" action="{% url 'cart' %}" method="POST">
             {% csrf_token %}
-            <select name="dinner_platter_name">
+            <select id="dinner_platter_name" name="dinner_platter_name">
                 {% for name in dinner_platter_names %}
                     <option value="{{ name.id }}">{{ name }}</option>
                 {% endfor %}
             </select>
-            <select name="dinner_platter_size">
+            <select id="dinner_platter_size" name="dinner_platter_size">
                 {% for size in dinner_platter_sizes %}
                     <option value="{{ size.id }}">{{ size }}</option>
                 {% endfor %}
             </select>
 
+            
+            <span id="dinner_platter_price"></span>
             <input type="submit" value="Add to cart">
         </form>
     {% endif %}

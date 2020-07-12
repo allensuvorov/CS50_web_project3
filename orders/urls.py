@@ -10,5 +10,6 @@ urlpatterns = [
     path("cart", views.cart_view, name="cart"), # to add an item to shopping cart
     path("pizza_price", views.pizza_price_view, name="pizza_price"), # for getting pizza price via AJAX
     path("<int:order_id>/order", views.order_view, name ="order"), # for placing an order
-    path("sub_price", views.sub_price_view, name="sub_price") # getting sub price via AJAX
+    path("sub_price", views.sub_price_view, name="sub_price"), # getting sub price via AJAX
+    path("dinner_platter_price", views.dinner_platter_price_view, name="dinner_platter_price")
 ]

@@ -189,6 +189,21 @@ def sub_price_view(request):
         'price': price
         })
 
+def dinner_platter_price_view(request):
+    if request.is_ajax and request.method == "GET":
+        dinner_platter_name_id = int(request.GET["dinner_platter_name"])
+        dinner_platter_size_id = int(request.GET["dinner_platter_size"])
+    try:
+        dinner_platter = Dinner_platter.objects.get(name=dinner_platter_name_id, size=dinner_platter_size_id)
+        price = dinner_platter.price
+
+    except Dinner_platter.DoesNotExist:
+        return JsonResponse ({'message': 'not in menu'})
+    
+    return JsonResponse ({
+        'price': price
+        })
+
 def order_view(request, order_id): # get order ID
     print ("\n","trying to put order #: " + str(order_id), "\n")
     

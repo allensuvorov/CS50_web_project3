@@ -127,10 +127,35 @@ function get_sub_price() {
     // console.log(pizza_name);
 
     request.send();
-
-
 };
 
 function get_dinner_platter_price() {
+    console.log("getting platter price");
 
+    // get data from user selection
+    const dinner_platter_name = document.getElementById('dinner_platter_name').value;
+    const dinner_platter_size = document.getElementById('dinner_platter_size').value;
+
+    // Initialize new AJAX request
+    const request = new XMLHttpRequest();
+
+    let URL = "dinner_platter_price?" + "dinner_platter_name=" + dinner_platter_name + "&dinner_platter_size=" + dinner_platter_size;
+    
+    // send AJAX request
+    request.open('GET', URL, true);
+
+    // Callback function for when request completes
+    request.onload = () => {
+        const data = JSON.parse(request.responseText);
+        console.log(data.price);
+        if (data.price) {
+            document.querySelector('#dinner_platter_price').innerHTML = data.price+"$";
+        }
+        else {
+            document.querySelector('#dinner_platter_price').innerHTML = "00.00$";
+        };
+
+    };
+
+    request.send();
 };
