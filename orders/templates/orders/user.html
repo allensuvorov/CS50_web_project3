@@ -103,9 +103,9 @@
                 {% endfor %}
             </select>
 
-            <select name="sub_add_on" multiple>
+            <select id="sub_add_on" name="sub_add_on" multiple>
                 {% for sub_add_on in sub_add_ons %}
-                    <option value="{{ sub_add_on.id }}">{{ sub_add_on }} </option>"
+                    <option value="{{ sub_add_on.id }}" data-price={{sub_add_on.price}}>{{ sub_add_on }} </option>"
                 {% endfor %}
             </select>
 
@@ -145,7 +145,7 @@
 
     {% if dinner_platters %}
         <h3>Pick a Dinner Platter</h3>
-        <form id="dinner_platter" action="{% url 'cart' %}" method="POST">
+        <form id="dinner_platter_form" action="{% url 'cart' %}" method="POST">
             {% csrf_token %}
             <select name="dinner_platter_name">
                 {% for name in dinner_platter_names %}

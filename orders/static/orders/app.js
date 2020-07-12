@@ -1,13 +1,20 @@
 document.addEventListener('DOMContentLoaded', () =>{
     console.log("on page load event");
-    get_price();
-    // const pizza_form=document.querySelector('#pizza_form');
+    
+    // run on load
+    get_pizza_price();
+    get_sub_price();
+    get_dinner_platter_price();
+
+    // grab the forms
     const pizza_form=document.forms.pizza_form;
+    const sub_form=document.forms.sub_form;
+    const dinner_platter_form=document.forms.dinner_platter_form;
     
-    // const pizza_toppings=document.getElementById('pizza_toppings');
-    // console.log(pizza_toppings.value);
-    
-    pizza_form.addEventListener('change', get_price);
+    // set these listeners onto these forms 
+    pizza_form.addEventListener('change', get_pizza_price);
+    sub_form.addEventListener('change', get_sub_price);
+    dinner_platter_form.addEventListener('change', get_dinner_platter_price);
       
 });
 
@@ -31,11 +38,11 @@ function count_selected_toppings() {
     return (count);
 };
 
-function get_price() {
+function get_pizza_price() {
     
-    console.log("get price event");
+    // console.log("get pizza price event");
     let count = count_selected_toppings();
-    console.log('number of selected toppings = ' + count);
+    // console.log('number of selected toppings = ' + count);
 
     // get data from user selection
     const pizza_size = document.getElementById('pizza_size').value;
@@ -69,9 +76,33 @@ function get_price() {
         };
 
     };
-    
-
-    console.log(pizza_name);
+    // console.log(pizza_name);
 
     request.send();
+};
+
+function get_add_ons_price_total(){
+
+    let options = sub_add_on.options; // get all options 
+    let total = 0;
+        for (let i=0; i<options.length; i++) {
+            if (options[i].selected) {
+                
+                total = total + parseFloat(options[i].dataset.price);
+                count++;
+            };
+        };
+        return(total);
+};
+
+function get_sub_price() {
+    console.log("getting price for add-ons");
+    let add_ons_price_total = get_add_ons_price_total();
+        
+    
+
+};
+
+function get_dinner_platter_price() {
+
 };
