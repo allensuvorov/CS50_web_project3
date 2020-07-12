@@ -52,7 +52,7 @@ function get_pizza_price() {
     // Initialize new AJAX request
     const request = new XMLHttpRequest();
 
-    let URL = "price?" + "pizza_name=" + pizza_name + "&pizza_size=" + pizza_size + "&toppings_count=" + count;
+    let URL = "pizza_price?" + "pizza_name=" + pizza_name + "&pizza_size=" + pizza_size + "&toppings_count=" + count;
     request.open('GET', URL, true);
 
     // Callback function for when request completes

@@ -131,7 +131,7 @@ def cart_view(request):
 
     return HttpResponseRedirect(reverse("index"))
 
-def price_view(request):
+def pizza_price_view(request):
     print ("\n","trying to get pizza price", "\n")
     if request.is_ajax and request.method == "GET":
         # get data name from the client side.
