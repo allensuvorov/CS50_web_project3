@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub, Sub_add_on, Sub_name, Sub_size, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size
+from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub_order_item, Dinner_platter_order_item, Pasta_order_item, Salad_order_item, Sub, Sub_add_on, Sub_name, Sub_size, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size
 
 # Create your views here.
 def index(request):
@@ -37,6 +37,7 @@ def index(request):
     }
     return render(request, "orders/user.html", context)
 
+#region Authentification views
 def register_view(request):
     
     if request.method =='POST':
@@ -73,64 +74,9 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return render(request, "orders/index.html", {"message": "Logged out."})
+#endregion Authentification
 
-def cart_view(request):
-    
-    # add check if cart is already in created, then use it or create a it
-    obj, created = Order.objects.get_or_create(
-        user=request.user,
-        status=Order_status.objects.get(pk=1)
-        # price = 0
-        )
-    print ("\n", obj, "\n")
-
-    try:
-        pizza_name_id = int(request.POST["pizza_name"])
-        pizza_size_id = int(request.POST["pizza_size"])
-        pizza_topping_combo_id = int(request.POST["pizza_topping_combo"])
-        pizza_count = int(request.POST["count"])
-        
-    
-    # find pizza in BD
-        pizza = Pizza.objects.get(name=pizza_name_id, size=pizza_size_id, combo=pizza_topping_combo_id)
-    
-    # find cart in order table
-        # cart = Order.objects.get(user=request.user, status=1)
-    # todo: this exception needs tuning 
-    except Pizza.DoesNotExist:
-        return render(request, "orders/error.html", {"message": "That Pizza Does not Exist."})
-    
-
-    # obj.pizzas.add(pizza)
-    pizza_order = Pizza_order_item(pizza=pizza, count=pizza_count, order=obj)
-    pizza_order.save()
-
-
-    # calculate total price
-    total_price = 0
-    pizzas = obj.pizzas.all()
-    for p in pizzas:
-        order_item_price = p.pizza.price * p.count
-        print (order_item_price)
-        total_price += order_item_price
-    
-    print ("\n", total_price, "\n")
-
-    # save total price to current order
-    obj.price = total_price
-    obj.save()
-    # print (obj.price)
-
-    # get all toppings
-    pizza_toppings = request.POST.getlist("pizza_toppings")
-    print ("\n", pizza_toppings, "\n")
-    
-    if pizza_toppings is not None:
-        for topping in pizza_toppings:
-            pizza_order.toppings.add(topping)
-
-    return HttpResponseRedirect(reverse("index"))
-
+#region Price via AJAX views
 def pizza_price_view(request):
     print ("\n","trying to get pizza price", "\n")
     if request.is_ajax and request.method == "GET":
@@ -203,6 +149,140 @@ def dinner_platter_price_view(request):
     return JsonResponse ({
         'price': price
         })
+#endregion Price via AJAX
+
+#region Cart views
+def cart_view(request):
+    
+    # add check if cart is already in created, then use it or create a it
+    obj, created = Order.objects.get_or_create(
+        user=request.user,
+        status=Order_status.objects.get(pk=1)
+        # price = 0
+        )
+    print ("\n", obj, "\n")
+
+    try:
+        pizza_name_id = int(request.POST["pizza_name"])
+        pizza_size_id = int(request.POST["pizza_size"])
+        pizza_topping_combo_id = int(request.POST["pizza_topping_combo"])
+        pizza_count = int(request.POST["count"])
+        
+    
+    # find pizza in BD
+        pizza = Pizza.objects.get(name=pizza_name_id, size=pizza_size_id, combo=pizza_topping_combo_id)
+    
+    # find cart in order table
+        # cart = Order.objects.get(user=request.user, status=1)
+    # todo: this exception needs tuning 
+    except Pizza.DoesNotExist:
+        return render(request, "orders/error.html", {"message": "That Pizza Does not Exist."})
+    
+    # create a new order item and save it to DB
+    pizza_order = Pizza_order_item(pizza=pizza, count=pizza_count, order=obj)
+    pizza_order.save()
+
+
+    # calculate total price
+    total_price = 0
+    pizzas = obj.pizzas.all()
+    for p in pizzas:
+        order_item_price = p.pizza.price * p.count
+        print (order_item_price)
+        total_price += order_item_price
+    
+    print ("\n", total_price, "\n")
+
+    # save total price to current order
+    obj.price = total_price
+    obj.save()
+    # print (obj.price)
+
+    # get all toppings
+    pizza_toppings = request.POST.getlist("pizza_toppings")
+    print ("\n", pizza_toppings, "\n")
+    
+    if pizza_toppings is not None:
+        for topping in pizza_toppings:
+            pizza_order.toppings.add(topping)
+
+    return HttpResponseRedirect(reverse("index"))
+
+def cart_sub_view(request):
+    # add check if cart is already in created, then use it or create a it
+    obj, created = Order.objects.get_or_create(
+        user=request.user,
+        status=Order_status.objects.get(pk=1)
+        )
+    print ("\n", obj, "\n")
+
+    try:
+        sub_name_id = int(request.POST["sub_name"])
+        sub_size_id = int(request.POST["sub_name"])
+        sub_count = int(request.POST["count"])
+
+        sub = Sub.objects.get(name=sub_name_id, size=sub_size_id)
+    except Sub.DoesNotExist:
+        return render(request, "orders/error.html", {"message": "That Sub Does not Exist."})
+    
+    sub_order = Sub_order_item(sub=sub, count=sub_count, order=obj)
+    sub_order.save()
+
+    return HttpResponseRedirect(reverse("index"))
+    
+def cart_dinner_platter_view(request):
+    # add check if cart is already in created, then use it or create a it
+    obj, created = Order.objects.get_or_create(
+        user=request.user,
+        status=Order_status.objects.get(pk=1)
+        )
+    print ("\n", obj, "\n")
+
+    dinner_platter_name_id = int(request.POST["dinner_platter_name"])
+    dinner_platter_size_id = int(request.POST["dinner_platter_size"])
+    dinner_platter_count = int(request.POST["count"])
+
+    dinner_platter = Dinner_platter.objects.get(name=dinner_platter_name_id, size=dinner_platter_size_id)
+    dinner_platter_order = Dinner_platter_order_item(dinner_platter=dinner_platter, count=dinner_platter_count, order=obj)
+    dinner_platter_order.save()
+
+    return HttpResponseRedirect(reverse("index"))
+
+def cart_pasta_view(request):
+    # add check if cart is already in created, then use it or create a it
+    obj, created = Order.objects.get_or_create(
+        user=request.user,
+        status=Order_status.objects.get(pk=1)
+        )
+    print ("\n", obj, "\n")
+
+    pasta_id = int(request.POST["pasta_name_price"])
+    pasta_count = int(request.POST["count"])
+
+    pasta = Pasta.objects.get(id=pasta_id)
+    pasta_order = Pasta_order_item(pasta=pasta, count=pasta_count, order=obj)
+    pasta_order.save()
+
+    return HttpResponseRedirect(reverse("index"))
+
+def cart_salad_view(request):
+    # add check if cart is already in created, then use it or create a it
+    obj, created = Order.objects.get_or_create(
+        user=request.user,
+        status=Order_status.objects.get(pk=1)
+        )
+    print ("\n", obj, "\n")
+
+    salad_id = int(request.POST["salad_name_price"])
+    salad_count = int(request.POST["count"])
+
+    salad = Salad.objects.get(id=salad_id)
+    salad_order = Salad_order_item(salad=salad, count=salad_count, order=obj)
+    salad_order.save()
+
+    return HttpResponseRedirect(reverse("index"))
+
+#endregion Cart views
 
 def order_view(request, order_id): # get order ID
     print ("\n","trying to put order #: " + str(order_id), "\n")

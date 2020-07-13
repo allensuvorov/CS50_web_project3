@@ -38,7 +38,7 @@ class Pizza(models.Model):
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
-        return f"pizza {self.name} size {self.size} with {self.combo} - {self.price}$" 
+        return f"Pizza: {self.name} size {self.size} with {self.combo} - {self.price}$" 
 
 # endregion Pizza models
 
@@ -70,7 +70,7 @@ class Sub(models.Model):
     price = models.DecimalField(max_digits=5,decimal_places=2)
     
     def __str__(self):
-        return f"{self.name} {self.size} - {self.price}$"
+        return f"Sub: {self.name} {self.size} - {self.price}$"
 
 # endregion Sub models
 
@@ -80,14 +80,14 @@ class Pasta(models.Model):
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
-        return f"{self.name} {self.price}"
+        return f"Pasta: {self.name} {self.price}"
 
 class Salad(models.Model):
     name = models.CharField(max_length=64)
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
-        return f"{self.name} {self.price}"
+        return f"Salad: {self.name} {self.price}"
 
 class Dinner_platter_name(models.Model):
     name = models.CharField(max_length=64)
@@ -108,7 +108,7 @@ class Dinner_platter(models.Model):
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
-        return f"{self.name} {self.size} {self.price}"
+        return f"Dinner Platter: {self.name} {self.size} {self.price}"
 # endregion Pasta, Salad, Dinner Platter
 
 # region Order

@@ -83,7 +83,7 @@ function get_pizza_price() {
 
 function get_add_ons_price_total(){
 
-    let options = sub_add_on.options; // get all options 
+    let options = sub_add_ons.options; // get all options 
     let total = 0;
         for (let i=0; i<options.length; i++) {
             if (options[i].selected) {

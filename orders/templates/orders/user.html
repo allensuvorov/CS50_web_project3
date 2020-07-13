@@ -88,7 +88,7 @@
     <!-- subs selection -->
     {% if subs %}
         <h3>Pick a Sub</h3>
-        <form id="sub_form" action="{% url 'cart' %}" method="POST">
+        <form id="sub_form" action="{% url 'cart_sub' %}" method="POST">
             {% csrf_token %}
 
             <select id="sub_name" name="sub_name">
@@ -103,7 +103,7 @@
                 {% endfor %}
             </select>
 
-            <select id="sub_add_on" name="sub_add_on" multiple>
+            <select id="sub_add_ons" name="sub_add_ons" multiple>
                 {% for sub_add_on in sub_add_ons %}
                     <option value="{{ sub_add_on.id }}" data-price={{sub_add_on.price}}>{{ sub_add_on }} </option>"
                 {% endfor %}
@@ -117,35 +117,9 @@
         </form>
     {% endif %}
 
-    {% if pastas %}
-        <h3>Pick a Pasta</h3>
-        <form id="pasta_form" action="{% url 'cart' %}" method="POST">
-            {% csrf_token %}
-            <select name="pasta_name_price">
-                {% for pasta in pastas %}
-                    <option value="{{ pasta.id }}">{{ pasta }}</option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Add to cart">
-        </form>
-    {% endif %}
-
-    {% if salads %}
-        <h3>Pick a Salad</h3>
-        <form id="salad_form" action="{% url 'cart' %}" method="POST">
-            {% csrf_token %}
-            <select name="salad_name_price">
-                {% for salad in salads %}
-                    <option value="{{ salad.id }}">{{ salad }}</option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Add to cart">
-        </form>
-    {% endif %}
-
     {% if dinner_platters %}
         <h3>Pick a Dinner Platter</h3>
-        <form id="dinner_platter_form" action="{% url 'cart' %}" method="POST">
+        <form id="dinner_platter_form" action="{% url 'cart_dinner_platter' %}" method="POST">
             {% csrf_token %}
             <select id="dinner_platter_name" name="dinner_platter_name">
                 {% for name in dinner_platter_names %}
@@ -157,12 +131,44 @@
                     <option value="{{ size.id }}">{{ size }}</option>
                 {% endfor %}
             </select>
-
-            
             <span id="dinner_platter_price"></span>
+            <label for="count">Quantity (between 1 and 50):</label>
+            <input type="number" id="quantity" name="count" min="1" max="50" value="1">
             <input type="submit" value="Add to cart">
         </form>
     {% endif %}
+
+    {% if pastas %}
+        <h3>Pick a Pasta</h3>
+        <form id="pasta_form" action="{% url 'cart_pasta' %}" method="POST">
+            {% csrf_token %}
+            <select name="pasta_name_price">
+                {% for pasta in pastas %}
+                    <option value="{{ pasta.id }}">{{ pasta }}</option>
+                {% endfor %}
+            </select>
+            <label for="count">Quantity (between 1 and 50):</label>
+            <input type="number" id="quantity" name="count" min="1" max="50" value="1">
+            <input type="submit" value="Add to cart">
+        </form>
+    {% endif %}
+
+    {% if salads %}
+        <h3>Pick a Salad</h3>
+        <form id="salad_form" action="{% url 'cart_salad' %}" method="POST">
+            {% csrf_token %}
+            <select name="salad_name_price">
+                {% for salad in salads %}
+                    <option value="{{ salad.id }}">{{ salad }}</option>
+                {% endfor %}
+            </select>
+            <label for="count">Quantity (between 1 and 50):</label>
+            <input type="number" id="quantity" name="count" min="1" max="50" value="1">
+            <input type="submit" value="Add to cart">
+        </form>
+    {% endif %}
+
+    
 
     <!-- #endregion Menu -->
 
@@ -180,16 +186,16 @@
                     <li>{{ sub }}</li>
                 {% endfor %}
 
+                {% for dinner_platter in unit.dinner_platters.all %}
+                <li>{{ dinner_platter }}</li>
+                {% endfor %}
+
                 {% for pasta in unit.pastas.all %}
                     <li>{{ pasta }}</li>
                 {% endfor %}
 
                 {% for salad in unit.salads.all %}
                     <li>{{ salad }}</li>
-                {% endfor %}
-
-                {% for dinner_platter in unit.dinner_platters.all %}
-                    <li>{{ dinner_platter }}</li>
                 {% endfor %}
             {% endfor %}
         </ul>    
