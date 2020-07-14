@@ -144,7 +144,7 @@ class Pizza_order_item(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="pizzas")
 
     def __str__(self):
-        return f"{self.pizza} - {self.count} pizzas, with toppings: " + ", ".join([a.topping for a in self.toppings.all()]) #that iterates the list of values, adding commas between those values
+        return f"{self.pizza} - {self.count} pizzas, including toppings: " + ", ".join([a.topping for a in self.toppings.all()]) #that iterates the list of values, adding commas between those values
 
 class Sub_order_item(models.Model):
     sub = models.ForeignKey(Sub, on_delete=models.CASCADE, blank=True)
@@ -153,7 +153,7 @@ class Sub_order_item(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="subs")
 
     def __str__(self):
-        return f"{self.sub} - {self.count} subs, with add-ons: " + ", ".join([a.add_on for a in self.add_ons.all()])
+        return f"{self.sub} - {self.count} subs, plus add-ons: " + ", ".join([a.add_on + "-" + str(a.price) + "$" for a in self.add_ons.all()]) 
 
 class Pasta_order_item(models.Model):
     pasta = models.ForeignKey(Pasta, on_delete=models.CASCADE, blank=True)

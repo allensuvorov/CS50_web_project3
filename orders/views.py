@@ -19,18 +19,55 @@ def index(request):
         cart = Order.objects.get(user=request.user, status=1)
 
         total_price = 0
-        
-        # if cart.pizzas.exists():
-        #     pizzas = cart.pizzas.all()
-        #     for p in pizzas:
-
-        # pizzas = obj.pizzas.all()
-        # for p in pizzas:
-        #     order_item_price = p.pizza.price * p.count
-        #     print (order_item_price)
-        #     total_price += order_item_price
-        
         # print ("\n", total_price, "\n")
+        
+        if cart.pizzas.exists():
+            cart_pizzas = cart.pizzas.all()
+            print ("Pizzas")
+            for item in cart_pizzas:
+                order_item_price = item.pizza.price * item.count
+                print (order_item_price)
+                total_price += order_item_price
+
+        if cart.subs.exists():
+            cart_subs = cart.subs.all()
+            print ("Subs")
+            for item in cart_subs:
+                add_ons = item.add_ons.all()
+                add_ons_total_price = 0
+                
+                for add_on in add_ons:
+                    add_ons_total_price +=add_on.price
+                    # print (add_on.price)
+
+                order_item_price = (item.sub.price+add_ons_total_price) * item.count
+                
+                print (order_item_price)
+                total_price += order_item_price
+
+        if cart.dinner_platters.exists():
+            cart_dinner_platters = cart.dinner_platters.all()
+            print ("DinnerPlatters")
+            for item in cart_dinner_platters:
+                order_item_price = item.dinner_platter.price * item.count
+                print (order_item_price)
+                total_price += order_item_price
+
+        if cart.pastas.exists():
+            cart_pastas = cart.pastas.all()
+            print ("Pastas")
+            for item in cart_pastas:
+                order_item_price = item.pasta.price * item.count
+                print (order_item_price)
+                total_price += order_item_price
+
+        if cart.salads.exists():
+            cart_salads = cart.salads.all()
+            print ("Salads")
+            for item in cart_salads:
+                order_item_price = item.salad.price * item.count
+                print (order_item_price)
+                total_price += order_item_price
 
         # save total price to current order
         cart.price = total_price
@@ -257,7 +294,7 @@ def cart_sub_view(request):
 
     # get all add-ons
     sub_add_ons = request.POST.getlist("sub_add_ons")
-    # print ("\n", pizza_toppings, "\n")
+    print ("\n", sub_add_ons, "\n")
     
     if sub_add_ons is not None:
         for add_on in sub_add_ons:
