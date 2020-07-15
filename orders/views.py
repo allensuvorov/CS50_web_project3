@@ -286,7 +286,7 @@ def cart_sub_view(request):
 
     try:
         sub_name_id = int(request.POST["sub_name"])
-        sub_size_id = int(request.POST["sub_name"])
+        sub_size_id = int(request.POST["sub_size"])
         sub_count = int(request.POST["count"])
 
         sub = Sub.objects.get(name=sub_name_id, size=sub_size_id)
