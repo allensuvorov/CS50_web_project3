@@ -2,6 +2,8 @@
 
 Web Programming with Python and JavaScript
 
+https://docs.cs50.net/ocw/web/projects/3/project3.html
+
 ## Notes:
 
 ### Models:
@@ -13,4 +15,9 @@ Web Programming with Python and JavaScript
     * Reasons to create tables for each pizza option (types, sizes, toppings options): 1) to be able to display them on the menu. 
 
 
-superuser: allen staycool
+
+
+### presentation user
+    * username: JonSmith
+* password: supertest5544
+* email: 55test@test.com

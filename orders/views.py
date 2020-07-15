@@ -14,13 +14,14 @@ def index(request):
     
     # else show user page
     
-    # if cart, calculate total price
+    # If cart exists, calculate total price for cart
     if Order.objects.filter(user=request.user, status=1).exists():
         cart = Order.objects.get(user=request.user, status=1)
 
         total_price = 0
         # print ("\n", total_price, "\n")
         
+
         if cart.pizzas.exists():
             cart_pizzas = cart.pizzas.all()
             print ("Pizzas")

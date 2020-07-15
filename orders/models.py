@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 # Create your models here.
 
-# region Pizza models
+# region Models: Pizza
 
 class Pizza_name(models.Model):
     name = models.CharField(max_length=64)
@@ -42,7 +42,7 @@ class Pizza(models.Model):
 
 # endregion Pizza models
 
-# region Sub models
+# region Models: Sub
 
 class Sub_name(models.Model):
     name = models.CharField(max_length=64)
@@ -74,21 +74,7 @@ class Sub(models.Model):
 
 # endregion Sub models
 
-# region Pasta, Salad, Dinner Platter
-class Pasta(models.Model):
-    name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=5,decimal_places=2)
-
-    def __str__(self):
-        return f"Pasta: {self.name} {self.price}"
-
-class Salad(models.Model):
-    name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=5,decimal_places=2)
-
-    def __str__(self):
-        return f"Salad: {self.name} {self.price}"
-
+# region Models: Dinner Platter
 class Dinner_platter_name(models.Model):
     name = models.CharField(max_length=64)
 
@@ -111,7 +97,23 @@ class Dinner_platter(models.Model):
         return f"Dinner Platter: {self.name} {self.size} {self.price}"
 # endregion Pasta, Salad, Dinner Platter
 
-# region Order
+# region Models: Pasta, Salad 
+class Pasta(models.Model):
+    name = models.CharField(max_length=64)
+    price = models.DecimalField(max_digits=5,decimal_places=2)
+
+    def __str__(self):
+        return f"Pasta: {self.name} {self.price}"
+
+class Salad(models.Model):
+    name = models.CharField(max_length=64)
+    price = models.DecimalField(max_digits=5,decimal_places=2)
+
+    def __str__(self):
+        return f"Salad: {self.name} {self.price}"
+# endregion Pasta, Salad
+
+# region Models: Order
 
 class Order_status(models.Model):
     name = models.CharField(max_length=64, blank=True)
