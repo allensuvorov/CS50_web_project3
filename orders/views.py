@@ -1,3 +1,4 @@
+# region Setup
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
@@ -5,8 +6,10 @@ from orders.forms import RegistrationForm
 from django.urls import reverse
 
 from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub_order_item, Dinner_platter_order_item, Pasta_order_item, Salad_order_item, Sub, Sub_add_on, Sub_name, Sub_size, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size
+# endregion Setup
 
 # Create your views here.
+
 def index(request):
     # if user is not authenticated than show index page with login and register links
     if not request.user.is_authenticated:
@@ -102,7 +105,7 @@ def index(request):
     }
     return render(request, "orders/user.html", context)
 
-#region Authentification views
+# region Authentification views
 def register_view(request):
     
     if request.method =='POST':
@@ -141,7 +144,7 @@ def logout_view(request):
     return render(request, "orders/index.html", {"message": "Logged out."})
 #endregion Authentification
 
-#region Price via AJAX views
+# region Price via AJAX views
 def pizza_price_view(request):
     # print ("\n","trying to get pizza price", "\n")
     if request.is_ajax and request.method == "GET":
@@ -216,7 +219,7 @@ def dinner_platter_price_view(request):
         })
 #endregion Price via AJAX
 
-#region Cart views
+# region Cart views
 def cart_pizza_view(request):
     
     # add check if cart is already in created, then use it or create a it
