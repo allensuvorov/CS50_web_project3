@@ -34,7 +34,6 @@ class Pizza(models.Model):
     name = models.ForeignKey(Pizza_name, on_delete=models.CASCADE)
     size = models.ForeignKey(Pizza_size, on_delete=models.CASCADE)
     combo = models.ForeignKey(Pizza_topping_combo, on_delete=models.CASCADE)
-    # toppings = models.ManyToManyField(Pizza_topping, blank=True)
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
@@ -132,8 +131,6 @@ class Order(models.Model):
     address = models.CharField(max_length=64, blank=True)
     date = models.DateField(auto_now=True)
     price = models.DecimalField(max_digits=7,decimal_places=2, blank=True, null=True)
-    
-    # cart = models.BooleanField(default=True, blank=True)
       
     def __str__(self):
         return f"#{self.id}, NAME: {self.user}, STATUS: {self.status}, ADDRESS: {self.address}, {self.date}, {self.price}$"

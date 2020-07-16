@@ -34,17 +34,8 @@
     <!-- #endregion Orders -->
 
     <!-- #region Menu -->
+    
     <h2>Menu</h2>
-    
-    <!-- <ul>
-        {% for pizza in pizzas %}
-        <li>
-            {{ pizza }}
-        </li>
-        {% endfor %}
-    </ul> -->
-    
-    <!-- <h2>Add Item to Shopping Cart</h2> -->
     
     <!-- pizza selection -->
     {% if pizzas %}
@@ -52,16 +43,13 @@
         <form id="pizza_form" action="{% url 'cart_pizza' %}" method="post">
             {% csrf_token %}
             
-
             <select id="pizza_name" name="pizza_name">
-                <!-- <option>Select pizza</option> -->
                 {% for pizza_name in pizza_names %}
                     <option value="{{ pizza_name.id }}">{{ pizza_name }}</option>
                 {% endfor %}
             </select>
 
             <select id="pizza_size" name="pizza_size">
-                <!-- <option>Select size</option> -->
                 {% for pizza_size in pizza_sizes %}
                     <option value="{{ pizza_size.id }}">{{ pizza_size }}</option>
                 {% endfor %}
@@ -168,8 +156,6 @@
         </form>
     {% endif %}
 
-    
-
     <!-- #endregion Menu -->
 
     <!-- #region Cart -->
@@ -203,14 +189,7 @@
         <hr>
 
         <span id="total_price">Total price: {{ cart.0.price }} $</span>
-        <!-- will be able to use this shorter cycle when we can get just the order and not a list of orders.  -->
-        <!-- <ul>
-            {% for pizza in cart.pizzas.all %}
-                <li>{{ pizza }}</li>            
-            {% endfor %}
-        </ul>   -->
       
-    
         <h2>Submit Order # {{ cart.0.id }} </h2>
 
         <form action="{% url 'order' cart.0.id %}" method="post">

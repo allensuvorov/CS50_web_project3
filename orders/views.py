@@ -146,11 +146,9 @@ def logout_view(request):
 
 # region Price via AJAX views
 def pizza_price_view(request):
-    # print ("\n","trying to get pizza price", "\n")
-    if request.is_ajax and request.method == "GET":
-        # get data name from the client side.
-        # print ("\n", "AJAX GET for PIZZA", "\n")
 
+    if request.is_ajax and request.method == "GET":
+        # get data name from the client side
         pizza_name_id = int(request.GET["pizza_name"])
         pizza_size_id = int(request.GET["pizza_size"])
         
@@ -159,21 +157,13 @@ def pizza_price_view(request):
         pizza_topping_combo = Pizza_topping_combo.objects.get(count=toppings_count)
         pizza_topping_combo_id = pizza_topping_combo.id
 
-        # pizza_topping_combo_id = int(request.GET["pizza_topping_combo"])
-        # pizza_count = int(request.GET["count"])
-        
-        # print ("\n", pizza_name_id, "\n")
-
     try:
-
         pizza = Pizza.objects.get(name=pizza_name_id, size=pizza_size_id, combo=pizza_topping_combo_id)
         price = pizza.price
         combo = pizza_topping_combo.combo
 
     except Pizza.DoesNotExist:
         return JsonResponse ({'message': 'not in menu'})
-    
-    # print ("\n", price, "\n")
 
     return JsonResponse ({
         'price': price,
@@ -182,22 +172,18 @@ def pizza_price_view(request):
         })
 
 def sub_price_view(request):
-    # print ("\n","trying to get sub price", "\n")
-    if request.is_ajax and request.method == "GET":
-        # get data name from the client side.
-        # print ("\n", "AJAX GET for SUB", "\n")
 
+    if request.is_ajax and request.method == "GET":
+        
+        # get data name from the client side.
         sub_name_id = int(request.GET["sub_name"])
         sub_size_id = int(request.GET["sub_size"])
     try:
-
         sub = Sub.objects.get(name=sub_name_id, size=sub_size_id)
         price = sub.price
 
     except Sub.DoesNotExist:
         return JsonResponse ({'message': 'not in menu'})
-    
-    # print ("\n", price, "\n")
 
     return JsonResponse ({
         'price': price
@@ -226,9 +212,7 @@ def cart_pizza_view(request):
     obj, created = Order.objects.get_or_create(
         user=request.user,
         status=Order_status.objects.get(pk=1)
-        # price = 0
         )
-    # print ("\n", obj, "\n")
 
     try:
         pizza_name_id = int(request.POST["pizza_name"])
@@ -236,12 +220,9 @@ def cart_pizza_view(request):
         pizza_topping_combo_id = int(request.POST["pizza_topping_combo"])
         pizza_count = int(request.POST["count"])
         
-    
     # find pizza in BD
         pizza = Pizza.objects.get(name=pizza_name_id, size=pizza_size_id, combo=pizza_topping_combo_id)
     
-    # find cart in order table
-        # cart = Order.objects.get(user=request.user, status=1)
     # todo: this exception needs tuning 
     except Pizza.DoesNotExist:
         return render(request, "orders/error.html", {"message": "That Pizza Does not Exist."})
@@ -250,25 +231,19 @@ def cart_pizza_view(request):
     pizza_order = Pizza_order_item(pizza=pizza, count=pizza_count, order=obj)
     pizza_order.save()
 
-
     # calculate total price
     total_price = 0
     pizzas = obj.pizzas.all()
     for p in pizzas:
         order_item_price = p.pizza.price * p.count
-        # print (order_item_price)
         total_price += order_item_price
-    
-    # print ("\n", total_price, "\n")
 
     # save total price to current order
     obj.price = total_price
     obj.save()
-    # print (obj.price)
 
     # get all toppings
     pizza_toppings = request.POST.getlist("pizza_toppings")
-    # print ("\n", pizza_toppings, "\n")
     
     if pizza_toppings is not None:
         for topping in pizza_toppings:
@@ -282,7 +257,6 @@ def cart_sub_view(request):
         user=request.user,
         status=Order_status.objects.get(pk=1)
         )
-    # print ("\n", obj, "\n")
 
     try:
         sub_name_id = int(request.POST["sub_name"])
@@ -304,7 +278,6 @@ def cart_sub_view(request):
         for add_on in sub_add_ons:
             sub_order.add_ons.add(add_on)
 
-
     return HttpResponseRedirect(reverse("index"))
     
 def cart_dinner_platter_view(request):
@@ -313,7 +286,6 @@ def cart_dinner_platter_view(request):
         user=request.user,
         status=Order_status.objects.get(pk=1)
         )
-    # print ("\n", obj, "\n")
 
     dinner_platter_name_id = int(request.POST["dinner_platter_name"])
     dinner_platter_size_id = int(request.POST["dinner_platter_size"])
@@ -331,7 +303,6 @@ def cart_pasta_view(request):
         user=request.user,
         status=Order_status.objects.get(pk=1)
         )
-    # print ("\n", obj, "\n")
 
     pasta_id = int(request.POST["pasta_name_price"])
     pasta_count = int(request.POST["count"])
@@ -348,7 +319,6 @@ def cart_salad_view(request):
         user=request.user,
         status=Order_status.objects.get(pk=1)
         )
-    # print ("\n", obj, "\n")
 
     salad_id = int(request.POST["salad_name_price"])
     salad_count = int(request.POST["count"])
