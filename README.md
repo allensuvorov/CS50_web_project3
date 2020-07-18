@@ -1,8 +1,9 @@
-# Project3 - Pizza
-
-- Course: Web Programming with Python and JavaScript
+# Project3 - "Pizza" (Django, JavaScript, AJAX, SQLite)
+- Description: web application for handling a pizza restaurant’s online orders
+- Video overview of the completed project: https://youtu.be/vHbjx0FEfRw 
 - Project Spec: https://docs.cs50.net/ocw/web/projects/3/project3.html
-- App Overview Video: https://youtu.be/vHbjx0FEfRw 
+- Course: CS50's Web Programming with Python and JavaScript
+
 
 ## Code Notes:
 
