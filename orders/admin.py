@@ -1,25 +1,25 @@
 from django.contrib import admin
 
-from .models import Pizza, PizzaName, PizzaSize, PizzaTopping, Pizza_topping_combo, Sub, Sub_name, Sub_size, Sub_add_on, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size, Order, Order_status, Pizza_order_item, Sub_order_item, Pasta_order_item, Salad_order_item, Dinner_platter_order_item
+from .models import Pizza, PizzaName, PizzaSize, PizzaTopping, PizzaToppingCombo, Sub, SubName, SubSize, SubAddOn, Pasta, Salad, DinnerPlatter, DinnerPlatterName, DinnerPlatterSize, Order, OrderStatus, PizzaOrderItem, SubOrderItem, PastaOrderItem, SaladOrderItem, DinnerPlatterOrderItem
 
 class PizzaOrderItemInLine(admin.TabularInline):
-    model = Pizza_order_item
+    model = PizzaOrderItem
     extra = 0
 
 class SubOrderItemInLine(admin.TabularInline):
-    model = Sub_order_item
+    model = SubOrderItem
     extra = 0
 
 class PastaOrderItemInline(admin.TabularInline):
-    model = Pasta_order_item
+    model = PastaOrderItem
     extra = 0
 
 class SaladOrderItemInline(admin.TabularInline):
-    model = Salad_order_item
+    model = SaladOrderItem
     extra = 0
 
 class DinnerPlatterOrderItemInline(admin.TabularInline):
-    model = Dinner_platter_order_item
+    model = DinnerPlatterOrderItem
     extra = 0
 
 class OrderAdmin (admin.ModelAdmin):
@@ -29,21 +29,21 @@ class OrderAdmin (admin.ModelAdmin):
 admin.site.register(Pizza)
 admin.site.register(PizzaName)
 admin.site.register(PizzaSize)
-admin.site.register(Pizza_topping_combo)
+admin.site.register(PizzaToppingCombo)
 admin.site.register(PizzaTopping)
 admin.site.register(Sub)
-admin.site.register(Sub_name)
-admin.site.register(Sub_size)
-admin.site.register(Sub_add_on)
+admin.site.register(SubName)
+admin.site.register(SubSize)
+admin.site.register(SubAddOn)
 admin.site.register(Pasta)
 admin.site.register(Salad)
-admin.site.register(Dinner_platter)
-admin.site.register(Dinner_platter_name)
-admin.site.register(Dinner_platter_size)
+admin.site.register(DinnerPlatter)
+admin.site.register(DinnerPlatterName)
+admin.site.register(DinnerPlatterSize)
 admin.site.register(Order, OrderAdmin)
-admin.site.register(Order_status)
-admin.site.register(Pizza_order_item)
-admin.site.register(Sub_order_item)
-admin.site.register(Pasta_order_item)
-admin.site.register(Salad_order_item)
-admin.site.register(Dinner_platter_order_item)
+admin.site.register(OrderStatus)
+admin.site.register(PizzaOrderItem)
+admin.site.register(SubOrderItem)
+admin.site.register(PastaOrderItem)
+admin.site.register(SaladOrderItem)
+admin.site.register(DinnerPlatterOrderItem)

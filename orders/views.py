@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
 
-from .models import Pizza, PizzaName, PizzaSize, PizzaTopping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub_order_item, Dinner_platter_order_item, Pasta_order_item, Salad_order_item, Sub, Sub_add_on, Sub_name, Sub_size, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size
+from .models import Pizza, PizzaName, PizzaSize, PizzaTopping, PizzaToppingCombo, Order, OrderStatus, PizzaOrderItem, SubOrderItem, DinnerPlatterOrderItem, PastaOrderItem, SaladOrderItem, Sub, SubAddOn, SubName, SubSize, Pasta, Salad, DinnerPlatter, DinnerPlatterName, DinnerPlatterSize
 # endregion Setup
 
 # Create your views here.
@@ -86,21 +86,21 @@ def index(request):
         "pizzas": Pizza.objects.all(),
         "pizza_names": PizzaName.objects.all(),
         "pizza_sizes": PizzaSize.objects.all(),
-        "pizza_topping_combos": Pizza_topping_combo.objects.all(),
+        "pizza_topping_combos": PizzaToppingCombo.objects.all(),
         "pizza_toppings": PizzaTopping.objects.all(),
         "cart": Order.objects.filter(user=request.user, status=1),
         "pending_orders": Order.objects.filter(user=request.user, status = 2),
         "delivered_orders": Order.objects.filter(user=request.user, status = 3),
         "user": request.user,
         "subs": Sub.objects.all(),
-        "sub_names": Sub_name.objects.all(),
-        "sub_sizes": Sub_size.objects.all(),
-        "sub_add_ons": Sub_add_on.objects.all(),
+        "sub_names": SubName.objects.all(),
+        "sub_sizes": SubSize.objects.all(),
+        "sub_add_ons": SubAddOn.objects.all(),
         "pastas": Pasta.objects.all(),
         "salads": Salad.objects.all(),
-        "dinner_platters": Dinner_platter.objects.all(),
-        "dinner_platter_names": Dinner_platter_name.objects.all(),
-        "dinner_platter_sizes": Dinner_platter_size.objects.all()
+        "dinner_platters": DinnerPlatter.objects.all(),
+        "dinner_platter_names": DinnerPlatterName.objects.all(),
+        "dinner_platter_sizes": DinnerPlatterSize.objects.all()
 
     }
     return render(request, "orders/user.html", context)
@@ -154,7 +154,7 @@ def pizza_price_view(request):
         
         # get number of toppings selected
         toppings_count = int(request.GET["toppings_count"])
-        pizza_topping_combo = Pizza_topping_combo.objects.get(count=toppings_count)
+        pizza_topping_combo = PizzaToppingCombo.objects.get(count=toppings_count)
         pizza_topping_combo_id = pizza_topping_combo.id
 
     try:
@@ -194,10 +194,10 @@ def dinner_platter_price_view(request):
         dinner_platter_name_id = int(request.GET["dinner_platter_name"])
         dinner_platter_size_id = int(request.GET["dinner_platter_size"])
     try:
-        dinner_platter = Dinner_platter.objects.get(name=dinner_platter_name_id, size=dinner_platter_size_id)
+        dinner_platter = DinnerPlatter.objects.get(name=dinner_platter_name_id, size=dinner_platter_size_id)
         price = dinner_platter.price
 
-    except Dinner_platter.DoesNotExist:
+    except DinnerPlatter.DoesNotExist:
         return JsonResponse ({'message': 'not in menu'})
     
     return JsonResponse ({
@@ -211,7 +211,7 @@ def cart_pizza_view(request):
     # add check if cart is already in created, then use it or create a it
     obj, created = Order.objects.get_or_create(
         user=request.user,
-        status=Order_status.objects.get(pk=1)
+        status=OrderStatus.objects.get(pk=1)
         )
 
     try:
@@ -228,7 +228,7 @@ def cart_pizza_view(request):
         return render(request, "orders/error.html", {"message": "That Pizza Does not Exist."})
     
     # create a new order item and save it to DB
-    pizza_order = Pizza_order_item(pizza=pizza, count=pizza_count, order=obj)
+    pizza_order = PizzaOrderItem(pizza=pizza, count=pizza_count, order=obj)
     pizza_order.save()
 
     # calculate total price
@@ -255,7 +255,7 @@ def cart_sub_view(request):
     # add check if cart is already in created, then use it or create a it
     obj, created = Order.objects.get_or_create(
         user=request.user,
-        status=Order_status.objects.get(pk=1)
+        status=OrderStatus.objects.get(pk=1)
         )
 
     try:
@@ -267,7 +267,7 @@ def cart_sub_view(request):
     except Sub.DoesNotExist:
         return render(request, "orders/error.html", {"message": "That Sub Does not Exist."})
     
-    sub_order = Sub_order_item(sub=sub, count=sub_count, order=obj)
+    sub_order = SubOrderItem(sub=sub, count=sub_count, order=obj)
     sub_order.save()
 
     # get all add-ons
@@ -284,15 +284,15 @@ def cart_dinner_platter_view(request):
     # add check if cart is already in created, then use it or create a it
     obj, created = Order.objects.get_or_create(
         user=request.user,
-        status=Order_status.objects.get(pk=1)
+        status=OrderStatus.objects.get(pk=1)
         )
 
     dinner_platter_name_id = int(request.POST["dinner_platter_name"])
     dinner_platter_size_id = int(request.POST["dinner_platter_size"])
     dinner_platter_count = int(request.POST["count"])
 
-    dinner_platter = Dinner_platter.objects.get(name=dinner_platter_name_id, size=dinner_platter_size_id)
-    dinner_platter_order = Dinner_platter_order_item(dinner_platter=dinner_platter, count=dinner_platter_count, order=obj)
+    dinner_platter = DinnerPlatter.objects.get(name=dinner_platter_name_id, size=dinner_platter_size_id)
+    dinner_platter_order = DinnerPlatterOrderItem(dinner_platter=dinner_platter, count=dinner_platter_count, order=obj)
     dinner_platter_order.save()
 
     return HttpResponseRedirect(reverse("index"))
@@ -301,14 +301,14 @@ def cart_pasta_view(request):
     # add check if cart is already in created, then use it or create a it
     obj, created = Order.objects.get_or_create(
         user=request.user,
-        status=Order_status.objects.get(pk=1)
+        status=OrderStatus.objects.get(pk=1)
         )
 
     pasta_id = int(request.POST["pasta_name_price"])
     pasta_count = int(request.POST["count"])
 
     pasta = Pasta.objects.get(id=pasta_id)
-    pasta_order = Pasta_order_item(pasta=pasta, count=pasta_count, order=obj)
+    pasta_order = PastaOrderItem(pasta=pasta, count=pasta_count, order=obj)
     pasta_order.save()
 
     return HttpResponseRedirect(reverse("index"))
@@ -317,14 +317,14 @@ def cart_salad_view(request):
     # add check if cart is already in created, then use it or create a it
     obj, created = Order.objects.get_or_create(
         user=request.user,
-        status=Order_status.objects.get(pk=1)
+        status=OrderStatus.objects.get(pk=1)
         )
 
     salad_id = int(request.POST["salad_name_price"])
     salad_count = int(request.POST["count"])
 
     salad = Salad.objects.get(id=salad_id)
-    salad_order = Salad_order_item(salad=salad, count=salad_count, order=obj)
+    salad_order = SaladOrderItem(salad=salad, count=salad_count, order=obj)
     salad_order.save()
 
     return HttpResponseRedirect(reverse("index"))
@@ -337,7 +337,7 @@ def order_view(request, order_id): # get order ID
     # change the status of the order
     order = Order.objects.get(pk=order_id)
     
-    second_order_status = Order_status.objects.get(pk=2)
+    second_order_status = OrderStatus.objects.get(pk=2)
     print ("second_order_status is:" + str(second_order_status))
 
     order.status = second_order_status

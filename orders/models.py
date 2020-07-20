@@ -19,7 +19,7 @@ class PizzaSize(models.Model):
     def __str__(self):
         return f"{self.size}"
 
-class Pizza_topping_combo(models.Model):
+class PizzaToppingCombo(models.Model):
     combo = models.CharField(max_length=64)
     count = models.IntegerField()
     def __str__(self):
@@ -33,7 +33,7 @@ class PizzaTopping(models.Model):
 class Pizza(models.Model):
     name = models.ForeignKey(PizzaName, on_delete=models.CASCADE)
     size = models.ForeignKey(PizzaSize, on_delete=models.CASCADE)
-    combo = models.ForeignKey(Pizza_topping_combo, on_delete=models.CASCADE)
+    combo = models.ForeignKey(PizzaToppingCombo, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
@@ -43,19 +43,19 @@ class Pizza(models.Model):
 
 # region Models: Sub
 
-class Sub_name(models.Model):
+class SubName(models.Model):
     name = models.CharField(max_length=64)
 
     def __str__(self):
         return f"{self.name}"
 
-class Sub_size(models.Model):
+class SubSize(models.Model):
     size = models.CharField(max_length=64)
 
     def __str__(self):
         return f"{self.size}"
 
-class Sub_add_on(models.Model):
+class SubAddOn(models.Model):
     add_on = models.CharField(max_length=64)
     price = models.DecimalField(max_digits=5,decimal_places=2)
     
@@ -63,9 +63,8 @@ class Sub_add_on(models.Model):
         return f"{self.add_on} - {self.price}$"
 
 class Sub(models.Model):
-    name = models.ForeignKey(Sub_name, on_delete=models.CASCADE)
-    size = models.ForeignKey(Sub_size, on_delete=models.CASCADE)
-    add_ons = models.ManyToManyField(Sub_add_on, blank=True)
+    name = models.ForeignKey(SubName, on_delete=models.CASCADE)
+    size = models.ForeignKey(SubSize, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=5,decimal_places=2)
     
     def __str__(self):
@@ -74,22 +73,22 @@ class Sub(models.Model):
 # endregion Sub models
 
 # region Models: Dinner Platter
-class Dinner_platter_name(models.Model):
+class DinnerPlatterName(models.Model):
     name = models.CharField(max_length=64)
 
     def __str__(self):
         return f"{self.name}"
 
-class Dinner_platter_size(models.Model):
+class DinnerPlatterSize(models.Model):
     size = models.CharField(max_length=64)
 
     def __str__(self):
         return f"{self.size}"
 
-class Dinner_platter(models.Model):
+class DinnerPlatter(models.Model):
 
-    name = models.ForeignKey(Dinner_platter_name, on_delete=models.CASCADE)
-    size = models.ForeignKey(Dinner_platter_size, on_delete=models.CASCADE)
+    name = models.ForeignKey(DinnerPlatterName, on_delete=models.CASCADE)
+    size = models.ForeignKey(DinnerPlatterSize, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
     def __str__(self):
@@ -114,7 +113,7 @@ class Salad(models.Model):
 
 # region Models: Order
 
-class Order_status(models.Model):
+class OrderStatus(models.Model):
     name = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
@@ -126,7 +125,7 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         blank=True
         )
-    status = models.ForeignKey(Order_status, on_delete=models.CASCADE, blank=True)
+    status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE, blank=True)
 
     address = models.CharField(max_length=64, blank=True)
     date = models.DateField(auto_now=True)
@@ -136,7 +135,7 @@ class Order(models.Model):
         return f"#{self.id}, NAME: {self.user}, STATUS: {self.status}, ADDRESS: {self.address}, {self.date}, {self.price}$"
         # , {self.pizzas.all()}, {self.subs.all()}"
 
-class Pizza_order_item(models.Model):
+class PizzaOrderItem(models.Model):
     pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, blank=True)
     toppings = models.ManyToManyField(PizzaTopping, blank=True)
     count = models.IntegerField()
@@ -145,16 +144,16 @@ class Pizza_order_item(models.Model):
     def __str__(self):
         return f"{self.pizza} - {self.count} pizzas, including toppings: " + ", ".join([a.topping for a in self.toppings.all()]) #that iterates the list of values, adding commas between those values
 
-class Sub_order_item(models.Model):
+class SubOrderItem(models.Model):
     sub = models.ForeignKey(Sub, on_delete=models.CASCADE, blank=True)
-    add_ons = models.ManyToManyField(Sub_add_on, blank=True)
+    add_ons = models.ManyToManyField(SubAddOn, blank=True)
     count = models.IntegerField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="subs")
 
     def __str__(self):
         return f"{self.sub} - {self.count} subs, plus add-ons: " + ", ".join([a.add_on + "-" + str(a.price) + "$" for a in self.add_ons.all()]) 
 
-class Pasta_order_item(models.Model):
+class PastaOrderItem(models.Model):
     pasta = models.ForeignKey(Pasta, on_delete=models.CASCADE, blank=True)
     count = models.IntegerField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="pastas")
@@ -162,7 +161,7 @@ class Pasta_order_item(models.Model):
     def __str__(self):
         return f"{self.pasta} - {self.count} pastas"
 
-class Salad_order_item(models.Model):
+class SaladOrderItem(models.Model):
     salad = models.ForeignKey(Salad, on_delete=models.CASCADE, blank=True)
     count = models.IntegerField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="salads")
@@ -170,8 +169,8 @@ class Salad_order_item(models.Model):
     def __str__(self):
         return f"{self.salad} - {self.count} salads"
 
-class Dinner_platter_order_item(models.Model):
-    dinner_platter = models.ForeignKey(Dinner_platter, on_delete=models.CASCADE, blank=True)
+class DinnerPlatterOrderItem(models.Model):
+    dinner_platter = models.ForeignKey(DinnerPlatter, on_delete=models.CASCADE, blank=True)
     count = models.IntegerField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="dinner_platters")
 
