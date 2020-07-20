@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from orders.forms import RegistrationForm
 from django.urls import reverse
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub_order_item, Dinner_platter_order_item, Pasta_order_item, Salad_order_item, Sub, Sub_add_on, Sub_name, Sub_size, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size
+from .models import Pizza, PizzaName, PizzaSize, PizzaTopping, Pizza_topping_combo, Order, Order_status, Pizza_order_item, Sub_order_item, Dinner_platter_order_item, Pasta_order_item, Salad_order_item, Sub, Sub_add_on, Sub_name, Sub_size, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size
 # endregion Setup
 
 # Create your views here.
@@ -84,10 +84,10 @@ def index(request):
 
     context = {
         "pizzas": Pizza.objects.all(),
-        "pizza_names": Pizza_name.objects.all(),
-        "pizza_sizes": Pizza_size.objects.all(),
+        "pizza_names": PizzaName.objects.all(),
+        "pizza_sizes": PizzaSize.objects.all(),
         "pizza_topping_combos": Pizza_topping_combo.objects.all(),
-        "pizza_toppings": Pizza_topping.objects.all(),
+        "pizza_toppings": PizzaTopping.objects.all(),
         "cart": Order.objects.filter(user=request.user, status=1),
         "pending_orders": Order.objects.filter(user=request.user, status = 2),
         "delivered_orders": Order.objects.filter(user=request.user, status = 3),

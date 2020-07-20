@@ -7,13 +7,13 @@ from django.contrib.auth import get_user_model
 
 # region Models: Pizza
 
-class Pizza_name(models.Model):
+class PizzaName(models.Model):
     name = models.CharField(max_length=64)
 
     def __str__(self):
         return f"{self.name}"
 
-class Pizza_size(models.Model):
+class PizzaSize(models.Model):
     size = models.CharField(max_length=64)
     
     def __str__(self):
@@ -25,14 +25,14 @@ class Pizza_topping_combo(models.Model):
     def __str__(self):
         return f"{self.combo}"
 
-class Pizza_topping(models.Model):
+class PizzaTopping(models.Model):
     topping = models.CharField(max_length=64)
     def __str__(self):
         return f"{self.topping}"
 
 class Pizza(models.Model):
-    name = models.ForeignKey(Pizza_name, on_delete=models.CASCADE)
-    size = models.ForeignKey(Pizza_size, on_delete=models.CASCADE)
+    name = models.ForeignKey(PizzaName, on_delete=models.CASCADE)
+    size = models.ForeignKey(PizzaSize, on_delete=models.CASCADE)
     combo = models.ForeignKey(Pizza_topping_combo, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=5,decimal_places=2)
 
@@ -138,7 +138,7 @@ class Order(models.Model):
 
 class Pizza_order_item(models.Model):
     pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, blank=True)
-    toppings = models.ManyToManyField(Pizza_topping, blank=True)
+    toppings = models.ManyToManyField(PizzaTopping, blank=True)
     count = models.IntegerField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="pizzas")
 

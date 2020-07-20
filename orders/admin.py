@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Pizza, Pizza_name, Pizza_size, Pizza_topping, Pizza_topping_combo, Sub, Sub_name, Sub_size, Sub_add_on, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size, Order, Order_status, Pizza_order_item, Sub_order_item, Pasta_order_item, Salad_order_item, Dinner_platter_order_item
+from .models import Pizza, PizzaName, PizzaSize, PizzaTopping, Pizza_topping_combo, Sub, Sub_name, Sub_size, Sub_add_on, Pasta, Salad, Dinner_platter, Dinner_platter_name, Dinner_platter_size, Order, Order_status, Pizza_order_item, Sub_order_item, Pasta_order_item, Salad_order_item, Dinner_platter_order_item
 
 class PizzaOrderItemInLine(admin.TabularInline):
     model = Pizza_order_item
@@ -27,10 +27,10 @@ class OrderAdmin (admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Pizza)
-admin.site.register(Pizza_name)
-admin.site.register(Pizza_size)
+admin.site.register(PizzaName)
+admin.site.register(PizzaSize)
 admin.site.register(Pizza_topping_combo)
-admin.site.register(Pizza_topping)
+admin.site.register(PizzaTopping)
 admin.site.register(Sub)
 admin.site.register(Sub_name)
 admin.site.register(Sub_size)
